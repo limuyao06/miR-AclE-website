@@ -15,7 +15,7 @@
   --green:#34d399;--amber:#fbbf24;
   --text:#e2e8f0;--text2:#94a3b8;
   --glow:0 0 40px rgba(0,225,187,.25);
-  --radius:16px;
+  --radius:16px;--radius-sm:12px;
 }
 html{scroll-behavior:smooth;font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
@@ -23,6 +23,8 @@ a{color:var(--cyan);text-decoration:none;transition:color .2s}
 a:hover{color:var(--blue)}
 img{max-width:100%;display:block}
 #dna-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
+
+/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(6,11,20,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow .3s}
 nav.scrolled{box-shadow:0 2px 30px rgba(0,225,187,.12)}
 .nav-logo{font-size:1.15rem;font-weight:800;color:var(--cyan);letter-spacing:.05em}
@@ -35,14 +37,14 @@ nav.scrolled{box-shadow:0 2px 30px rgba(0,225,187,.12)}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 5rem;position:relative;z-index:1}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.4rem 1.1rem;font-size:.82rem;color:var(--cyan);font-weight:500;margin-bottom:1.8rem}
-.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
 .hero h1{font-size:clamp(2.2rem,5.5vw,4.2rem);font-weight:900;line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
 .hero h1 .grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero .subtitle{font-size:clamp(1rem,2vw,1.25rem);color:var(--text2);max-width:680px;margin-bottom:2.5rem}
 .hero .team-tag{font-size:.95rem;color:var(--amber);font-weight:600;letter-spacing:.1em;margin-bottom:.3rem}
-.hero .uni{font-size:.85rem;color:var(--text3,#94a3b8);margin-bottom:3rem}
+.hero .uni{font-size:.85rem;color:var(--text2);margin-bottom:3rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.4rem 1.1rem;font-size:.82rem;color:var(--cyan);font-weight:500;margin-bottom:1.8rem}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
 .hero-stats{display:flex;gap:3.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:3rem}
 .hero-stat{text-align:center}
 .hero-stat .num{font-size:2.4rem;font-weight:800;color:var(--cyan);line-height:1}
@@ -51,22 +53,27 @@ nav.scrolled{box-shadow:0 2px 30px rgba(0,225,187,.12)}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 .scroll-hint svg{width:20px;height:20px;stroke:var(--text2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* QUICK LINKS */
-.quick-links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
-.quick-link{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.6rem 1.4rem;font-size:.9rem;color:var(--text2);transition:all .3s;font-weight:500}
-.quick-link:hover{border-color:rgba(0,225,187,.4);color:var(--cyan);box-shadow:var(--glow);transform:translateY(-2px)}
-.quick-link .q-icon{font-size:1.1rem}
-
-/* SECTION PREVIEW (on homepage) */
-.preview-section{padding:3rem 2rem;max-width:1100px;margin:0 auto;position:relative;z-index:1}
-.preview-section h2{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
-.preview-section h2 span{font-size:.7rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.2rem .6rem;color:var(--text3);font-weight:500}
-.preview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:3rem}
-.preview-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;transition:all .3s;cursor:pointer;text-decoration:none;display:block;color:inherit}
-.preview-card:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow);transform:translateY(-4px)}
-.preview-card .pc-icon{font-size:1.6rem;margin-bottom:.8rem}
-.preview-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.4rem}
-.preview-card p{font-size:.82rem;color:var(--text2);line-height:1.6}
+/* SECTION: EXPLORE */
+.explore-section{padding:4rem 2rem 5rem;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.explore-header{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+.explore-header h2{font-size:1.5rem;font-weight:800;color:#fff}
+.explore-header .tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.3rem .9rem;font-size:.75rem;color:var(--text2);font-weight:500}
+.explore-scroll{display:flex;gap:1.2rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scroll-behavior:smooth}
+.explore-scroll::-webkit-scrollbar{height:4px}
+.explore-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.03);border-radius:4px}
+.explore-scroll::-webkit-scrollbar-thumb{background:rgba(0,225,187,.3);border-radius:4px}
+.explore-card{flex:0 0 280px;scroll-snap-align:start;background:linear-gradient(160deg,rgba(0,225,187,.06) 0%,rgba(167,139,250,.04) 50%,rgba(6,11,20,.8) 100%);border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.5rem;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;text-decoration:none;color:inherit;display:block}
+.explore-card::before{content:"";position:absolute;inset:0;border-radius:var(--radius);background:linear-gradient(135deg,rgba(0,225,187,.12) 0%,rgba(124,58,237,.08) 100%);opacity:0;transition:opacity .35s}
+.explore-card:hover{transform:translateY(-6px);border-color:rgba(0,225,187,.4);box-shadow:0 20px 50px rgba(0,225,187,.15),0 0 0 1px rgba(0,225,187,.2)}
+.explore-card:hover::before{opacity:1}
+.explore-card .card-glow{position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(0,225,187,.15) 0%,transparent 70%);pointer-events:none}
+.explore-card .card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem;background:linear-gradient(135deg,rgba(0,225,187,.15),rgba(167,139,250,.12));border:1px solid var(--border);position:relative;z-index:1}
+.explore-card h3{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.5rem;position:relative;z-index:1}
+.explore-card p{font-size:.85rem;color:var(--text2);line-height:1.7;position:relative;z-index:1}
+.explore-card .card-arrow{position:absolute;bottom:1.5rem;right:1.5rem;width:32px;height:32px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .35s;z-index:1}
+.explore-card:hover .card-arrow{background:rgba(0,225,187,.2);border-color:rgba(0,225,187,.4);transform:translate(4px,-4px)}
+.explore-card .card-arrow svg{width:14px;height:14px;stroke:var(--text2);fill:none;stroke-width:2;transition:stroke .3s}
+.explore-card:hover .card-arrow svg{stroke:var(--cyan)}
 
 /* FOOTER */
 footer{background:rgba(6,11,20,.95);border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;position:relative;z-index:1}
@@ -74,13 +81,17 @@ footer{background:rgba(6,11,20,.95);border-top:1px solid var(--border);padding:3
 .footer-brand span{color:var(--purple)}
 footer p{font-size:.85rem;color:var(--text2);margin-bottom:.3rem}
 .footer-links{margin:1.5rem 0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
-.footer-links a{font-size:.85rem;color:var(--text3);transition:color .2s}
+.footer-links a{font-size:.85rem;color:var(--text3,#94a3b8);transition:color .2s}
 .footer-links a:hover{color:var(--cyan)}
 .footer-bottom{margin-top:1.5rem;font-size:.75rem;color:rgba(255,255,255,.2)}
 
 /* ANIMATIONS */
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
 .fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* PAGE TRANSITION */
+.page-transition{position:fixed;inset:0;z-index:9999;background:var(--bg);pointer-events:none;opacity:0;transition:opacity .2s ease}
+.page-transition.active{opacity:1}
 
 @media(max-width:768px){
   nav{padding:0 1.2rem}
@@ -92,13 +103,14 @@ footer p{font-size:.85rem;color:var(--text2);margin-bottom:.3rem}
   .nav-hamburger.active span:nth-child(2){opacity:0}
   .nav-hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
   .hero-stats{gap:2rem}
-  .preview-section{padding:2rem 1.2rem}
-  .preview-grid{grid-template-columns:1fr 1fr}
+  .explore-section{padding:3rem 1.2rem 4rem}
+  .explore-card{flex:0 0 260px}
 }
 </style>
 </head>
 <body>
 <canvas id="dna-canvas"></canvas>
+<div class="page-transition" id="pageTransition"></div>
 <nav id="navbar">
   <div class="nav-logo">miR-<span>AclE</span></div>
   <ul class="nav-links" id="navLinks">
@@ -126,51 +138,59 @@ footer p{font-size:.85rem;color:var(--text2);margin-bottom:.3rem}
     <div class="hero-stat"><div class="num">>60%</div><div class="label">靶标恢复率</div></div>
     <div class="hero-stat"><div class="num">&lt;10%</div><div class="label">交叉反应</div></div>
   </div>
-  <div class="quick-links fade-up">
-    <a href="about.html" class="quick-link"><span class="q-icon">📖</span>项目简介</a>
-    <a href="innovation.html" class="quick-link"><span class="q-icon">💡</span>创新亮点</a>
-    <a href="route.html" class="quick-link"><span class="q-icon">🔬</span>技术路线</a>
-    <a href="data.html" class="quick-link"><span class="q-icon">📊</span>数据成果</a>
-    <a href="timeline.html" class="quick-link"><span class="q-icon">🗓️</span>实施计划</a>
-  </div>
-  <div class="scroll-hint">
+  <div class="scroll-hint fade-up">
     <span>向下浏览</span>
     <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
   </div>
 </div>
 
-<div class="preview-section">
-  <h2>探索项目 <span>点击跳转详情</span></h2>
-  <div class="preview-grid">
-    <a href="about.html" class="preview-card fade-up">
-      <div class="pc-icon">🧬</div>
+<div class="explore-section">
+  <div class="explore-header fade-up">
+    <h2>探索项目</h2>
+    <span class="tag">点击跳转详情</span>
+  </div>
+  <div class="explore-scroll">
+    <a href="about.html" class="explore-card fade-up">
+      <div class="card-glow"></div>
+      <div class="card-icon">🧬</div>
       <h3>项目简介</h3>
-      <p>了解 miR-AclE 项目的核心目标与背景</p>
+      <p>了解 miR-AclE 项目的核心目标、研究背景与团队信息</p>
+      <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
-    <a href="innovation.html" class="preview-card fade-up">
-      <div class="pc-icon">💡</div>
+    <a href="innovation.html" class="explore-card fade-up">
+      <div class="card-glow"></div>
+      <div class="card-icon">💡</div>
       <h3>创新亮点</h3>
-      <p>三项核心技术创新与突破</p>
+      <p>三项核心技术创新：AI 序列设计、正交 DNA 网络、DBTL 闭环</p>
+      <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
-    <a href="route.html" class="preview-card fade-up">
-      <div class="pc-icon">🔬</div>
+    <a href="route.html" class="explore-card fade-up">
+      <div class="card-glow"></div>
+      <div class="card-icon">🔬</div>
       <h3>技术路线</h3>
-      <p>从序列设计到数据验证的完整流程</p>
+      <p>从序列设计到数据验证的完整 AI-湿实验闭环流程</p>
+      <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
-    <a href="dbtl.html" class="preview-card fade-up">
-      <div class="pc-icon">🔄</div>
+    <a href="dbtl.html" class="explore-card fade-up">
+      <div class="card-glow"></div>
+      <div class="card-icon">🔄</div>
       <h3>DBTL 循环</h3>
-      <p>Design-Build-Test-Learn 迭代引擎</p>
+      <p>Design-Build-Test-Learn 迭代引擎，驱动序列持续优化</p>
+      <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
-    <a href="data.html" class="preview-card fade-up">
-      <div class="pc-icon">📊</div>
+    <a href="data.html" class="explore-card fade-up">
+      <div class="card-glow"></div>
+      <div class="card-icon">📊</div>
       <h3>数据成果</h3>
-      <p>第一轮实验结果与关键指标</p>
+      <p>第一轮实验结果：淬灭效率 80%+，信噪比 &gt;5，交叉反应 &lt;10%</p>
+      <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
-    <a href="timeline.html" class="preview-card fade-up">
-      <div class="pc-icon">🗓️</div>
+    <a href="timeline.html" class="explore-card fade-up">
+      <div class="card-glow"></div>
+      <div class="card-icon">🗓️</div>
       <h3>实施计划</h3>
-      <p>下一阶段里程碑与时间安排</p>
+      <p>下一阶段里程碑：EpCAM 验证、数据集建立、模型微调与候选合成</p>
+      <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
   </div>
 </div>
@@ -205,8 +225,22 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
 hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});
 navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')}));
+
+// Page transition for smooth jumps
+const transition=document.getElementById('pageTransition');
+document.querySelectorAll('a[href^="/"],a[href$=".html"]').forEach(link=>{
+  link.addEventListener('click',e=>{
+    const href=link.getAttribute('href');
+    if(href.startsWith('http')||href==='#'||href.startsWith('#'))return;
+    e.preventDefault();
+    transition.classList.add('active');
+    setTimeout(()=>{window.location.href=href},220);
+  });
+});
+
+// Fade-up animation
 const fadeEls=document.querySelectorAll('.fade-up');
-const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.12});
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
 fadeEls.forEach(el=>observer.observe(el));
 </script>
 </body>
