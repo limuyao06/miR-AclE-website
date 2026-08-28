@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>miR-AclE - AI驱动DNA逻辑网络肿瘤精准诊断</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#060b14;--bg2:#0a1628;--surface:rgba(255,255,255,.04);--border:rgba(0,225,187,.15);--cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;--green:#34d399;--amber:#fbbf24;--text:#e2e8f0;--text2:#94a3b8;--glow:0 0 40px rgba(0,225,187,.25)}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+a{color:var(--cyan);text-decoration:none}
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.45}
+.content-wrap{position:relative;z-index:1}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,11,20,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 30px rgba(0,225,187,.1)}
+.nav-logo{font-size:1.15rem;font-weight:700;color:var(--cyan);letter-spacing:.05em}
+.nav-logo span{color:var(--purple)}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--text2);font-size:.88rem;transition:color .2s}
+.nav-links a:hover{color:var(--cyan)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative}
+.hero::after{content:""";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.35rem 1rem;font-size:.8rem;color:var(--cyan);margin-bottom:1.5rem}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(2rem,5vw,3.8rem);font-weight:800;line-height:1.2;margin-bottom:1rem;background:linear-gradient(135deg,#fff 0%,var(--cyan) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .subtitle{font-size:clamp(1rem,2vw,1.35rem);color:var(--text2);max-width:720px;margin-bottom:2rem}
+.hero .team-name{font-size:1rem;color:var(--amber);letter-spacing:.1em;margin-bottom:.5rem}
+.hero-stats{display:flex;gap:3rem;flex-wrap:wrap;justify-content:center;margin-top:3rem}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:2rem;font-weight:800;color:var(--cyan)}
+.hero-stat .label{font-size:.8rem;color:var(--text2);margin-top:.2rem}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);animation:bob 2s ease-in-out infinite;color:var(--text2);font-size:.8rem}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.section-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--cyan);margin-bottom:.5rem}
+.section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:1rem;color:#fff}
+.section-desc{color:var(--text2);max-width:680px;margin-bottom:2.5rem;font-size:.95rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:border-color .3s,box-shadow .3s,transform .3s}
+.card:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow);transform:translateY(-4px)}
+.card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem;background:linear-gradient(135deg,rgba(0,225,187,.15),rgba(167,139,250,.15));border:1px solid var(--border)}
+.card h3{font-size:1.05rem;font-weight:600;margin-bottom:.5rem;color:#fff}
+.card p{font-size:.88rem;color:var(--text2);line-height:1.7}
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem}
+.innovation-list{display:flex;flex-direction:column;gap:1.5rem}
+.innovation-item{display:flex;gap:1.5rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:border-color .3s,box-shadow .3s}
+.innovation-item:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow)}
+.innovation-num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--bg)}
+.innovation-item h3{font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:.4rem}
+.innovation-item p{font-size:.88rem;color:var(--text2)}
+.route-diagram{display:flex;flex-direction:column;gap:0;position:relative;padding-left:3rem}
+.route-diagram::before{content:""";position:absolute;left:14px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--cyan),var(--purple),var(--green))}
+.route-step{position:relative;padding:0 0 2rem 1.5rem}
+.route-step:last-child{padding-bottom:0}
+.route-dot{position:absolute;left:-3rem;top:.35rem;width:30px;height:30px;border-radius:50%;background:var(--bg2);border:2px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--cyan)}
+.route-step h3{font-size:1rem;font-weight:600;color:#fff;margin-bottom:.3rem}
+.route-step p{font-size:.88rem;color:var(--text2)}
+.route-step .tag{display:inline-block;font-size:.7rem;padding:.15rem .5rem;border-radius:999px;background:rgba(0,225,187,.1);border:1px solid rgba(0,225,187,.25);color:var(--cyan);margin-top:.4rem;margin-right:.3rem}
+.dbtl-container{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem}
+.dbtl-card{text-align:center;padding:1.5rem 1rem}
+.dbtl-card .dbtl-letter{font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.dbtl-card h4{font-size:.95rem;font-weight:600;color:#fff;margin:.5rem 0 .3rem}
+.dbtl-card p{font-size:.8rem;color:var(--text2)}
+.dbtl-arrow{display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--cyan)}
+.results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.result-card{text-align:center}
+.result-card .result-value{font-size:2.6rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+.result-card .result-unit{font-size:.9rem;color:var(--cyan);font-weight:600}
+.result-card .result-label{font-size:.82rem;color:var(--text2);margin-top:.4rem}
+.result-bar{margin-top:.75rem;height:6px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.result-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width 1.5s ease}
+.exp-table-wrap{overflow-x:auto;margin-top:1.5rem;border-radius:12px;border:1px solid var(--border)}
+.exp-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.exp-table th{background:rgba(0,225,187,.08);color:var(--cyan);padding:.85rem 1rem;text-align:left;font-weight:600;border-bottom:1px solid var(--border);white-space:nowrap}
+.exp-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text2)}
+.exp-table tr:hover td{background:rgba(0,225,187,.03);color:var(--text)}
+.tag-good{color:var(--green)}
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem}
+.timeline-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;border-left:3px solid var(--cyan)}
+.timeline-item .t-date{font-size:.78rem;color:var(--cyan);font-weight:600;margin-bottom:.3rem}
+.timeline-item h4{font-size:.9rem;color:#fff;margin-bottom:.3rem}
+.timeline-item p{font-size:.8rem;color:var(--text2)}
+footer{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);color:var(--text2);font-size:.82rem}
+footer .footer-brand{font-size:1.1rem;font-weight:700;color:var(--cyan);margin-bottom:.3rem}
+@media(max-width:768px){.nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(6,11,20,.96);flex-direction:column;padding:1.5rem;gap:1rem;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-hamburger{display:flex}.dbtl-container{grid-template-columns:repeat(2,1fr)}.dbtl-arrow{display:none}.hero-stats{gap:1.5rem}.route-diagram{padding-left:2rem}.route-dot{left:-2rem;width:24px;height:24px;font-size:.6rem}}
+@media(max-width:480px){.dbtl-container{grid-template-columns:1fr}section{padding:3rem 1.25rem}}
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="content-wrap">
+<nav id="navbar">
+  <div class="nav-logo">miR-<span>AclE</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">项目简介</a></li>
+    <li><a href="#innovation">核心创新</a></li>
+    <li><a href="#route">技术路线</a></li>
+    <li><a href="#dbtl">DBTL 闭环</a></li>
+    <li><a href="#results">数据成果</a></li>
+    <li><a href="#timeline">实施计划</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>AI+合成生物创新大赛</div>
+  <p class="team-name">ATCG 碱基互补配队 — 天津大学 合成生物学专业</p>
+  <h1>AI 优化的 DNA 逻辑网络<br>与分子信标肿瘤精准诊断</h1>
+  <p class="subtitle">融合深度学习与 DNA 链置换逻辑门，构建双标志物 AND 门传感体系，实现肿瘤相关 miRNA 与表面蛋白的超高特异性早期检测。</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">80%+</div><div class="label">淬灭效率</div></div>
+    <div class="hero-stat"><div class="num">&gt;5</div><div class="label">信噪比 S/N</div></div>
+    <div class="hero-stat"><div class="num">&gt;60%</div><div class="label">对应靶标恢复率</div></div>
+    <div class="hero-stat"><div class="num">&lt;10%</div><div class="label">非靶标交叉响应</div></div>
+  </div>
+  <div class="scroll-hint">↓ 向下探索</div>
+</header>
+<section id="about">
+  <div class="fade-up">
+    <p class="section-label">项目简介</p>
+    <h2 class="section-title">癌症早期液体活检的新策略</h2>
+    <p class="section-desc">癌症早期诊断的核心难点在于疾病相关核酸标志物丰度低，且细胞外囊泡（EVs）的总量、亚群组成和检测背景存在显著波动。本项目以 EV 表面分子与来源 miRNA 为联合分析对象，设计了一套可自校准的双通道 DNA 传感系统，并全程由 AI 辅助序列优化。</p>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="card"><div class="card-icon">&#129510;</div><h3>DNA 逻辑网络底盘</h3><p>以 CD63 适配体捕获 EV，通过 DNA 链置换构建 AND 逻辑门，仅在肿瘤标志物双阳性时输出荧光信号。</p></div>
+    <div class="card"><div class="card-icon">&#128300;</div><h3>红/绿双通道比值检测</h3><p>绿色通道表征有效 EV 捕获量，红色通道表征 miRNA 触发响应，以比值 R 实现内参自校准，消除样本量波动。</p></div>
+    <div class="card"><div class="card-icon">&#129302;</div><h3>AI 全流程序列设计</h3><p>融合 DNABERT 序列表征、NUPACK 热力学约束与机器学习预测，构建可解释的序列-结构-性能模型。</p></div>
+    <div class="card"><div class="card-icon">&#128260;</div><h3>DBTL 干湿闭环</h3><p>Design-Build-Test-Learn 迭代循环，实验真值持续修正模型，模型输出指导下一轮探针优化。</p></div>
+  </div>
+</section>
+<section id="innovation">
+  <div class="fade-up">
+    <p class="section-label">核心创新</p>
+    <h2 class="section-title">三大创新点</h2>
+    <p class="section-desc">突破传统单标志物检测的局限，将 AI 深度融入核酸传感器设计全流程。</p>
+  </div>
+  <div class="innovation-list fade-up">
+    <div class="innovation-item"><div class="innovation-num">1</div><div><h3>双标志物逻辑 AND 门</h3><p>同时检测细胞内 miR-21 与细胞表面 EpCAM，只有双阳性才输出荧光信号，大幅降低炎症等干扰造成的假阳性，提升肿瘤早期诊断特异性。</p></div></div>
+    <div class="innovation-item"><div class="innovation-num">2</div><div><h3>AI 赋能的全流程序列设计</h3><p>采用 DNABERT 微调预测分子信标结合亲和力；Transformer 生成高正交性逻辑门序列；机器学习预测链置换反应速率，对比 SOTA 基线持续优化响应效率。</p></div></div>
+    <div class="innovation-item"><div class="innovation-num">3</div><div><h3>比值化自校准传感架构</h3><p>由单纯布尔开关升级为红/绿双通道比值读取，以单位有效捕获量对应的 miRNA 响应进行连续定量，有效校正 EV 总量、探针负载和仪器漂移带来的波动。</p></div></div>
+  </div>
+</section>
+<section id="route">
+  <div class="fade-up">
+    <p class="section-label">技术路线</p>
+    <h2 class="section-title">AI 与湿实验深度融合</h2>
+    <p class="section-desc">从序列设计到实验验证的完整技术链路。</p>
+  </div>
+  <div class="route-diagram fade-up">
+    <div class="route-step"><div class="route-dot">1</div><h3>输入：EpCAM 蛋白识别</h3><p>核酸适配体识别肿瘤细胞表面 EpCAM → 触发 DNA 链置换反应 → 释放中间信号链</p><span class="tag">适配体</span><span class="tag">链置换</span></div>
+    <div class="route-step"><div class="route-dot">2</div><h3>输入：miR-21 检测</h3><p>分子信标探针与细胞内 miR-21 特异性结合 → 构象打开 → 释放第二条信号链</p><span class="tag">分子信标</span><span class="tag">FAM/BHQ1</span></div>
+    <div class="route-step"><div class="route-dot">3</div><h3>AND 逻辑门整合</h3><p>两条信号链在 DNA 逻辑网络中相互作用，仅当双输入同时存在时解锁报告基团，输出强荧光信号</p><span class="tag">正交性设计</span><span class="tag">低泄漏</span></div>
+    <div class="route-step"><div class="route-dot">4</div><h3>AI 辅助序列优化</h3><p>DNABERT 提取序列语义特征，NUPACK 计算热力学约束，随机森林/XGBoost 预测性能，多目标优化生成候选序列</p><span class="tag">DNABERT</span><span class="tag">NUPACK</span><span class="tag">XGBoost</span></div>
+    <div class="route-step"><div class="route-dot">5</div><h3>实验验证与数据反馈</h3><p>PAGE 验证结构、荧光酶标仪测定信噪比、细胞实验验证双阳性识别率，数据回填模型完成 DBTL 迭代</p><span class="tag">PAGE</span><span class="tag">荧光检测</span><span class="tag">流式细胞术</span></div>
+  </div>
+</section>
+<section id="dbtl">
+  <div class="fade-up">
+    <p class="section-label">研发体系</p>
+    <h2 class="section-title">DBTL 干湿闭环循环</h2>
+    <p class="section-desc">模型与实验相互滋养，持续迭代优化。</p>
+  </div>
+  <div class="dbtl-container fade-up">
+    <div class="card dbtl-card"><div class="dbtl-letter">D</div><h4>Design 设计</h4><p>AI 模型生成分子信标候选序列与逻辑门 DNA 序列，预测亲和力、正交性与反应速率</p></div>
+    <div class="dbtl-arrow">&#8594;</div>
+    <div class="card dbtl-card"><div class="dbtl-letter">B</div><h4>Build 构建</h4><p>化学合成候选序列，在试管中组装逻辑网络及分子信标传感体系</p></div>
+    <div class="dbtl-arrow">&#8594;</div>
+    <div class="card dbtl-card"><div class="dbtl-letter">T</div><h4>Test 测试</h4><p>体外荧光测试信噪比与漏电率，细胞实验验证双阳性识别率与特异性</p></div>
+    <div class="dbtl-arrow">&#8594;</div>
+    <div class="card dbtl-card"><div class="dbtl-letter">L</div><h4>Learn 学习</h4><p>实验数据反馈模型，修正序列打分权重，进行第二轮优化设计</p></div>
+  </div>
+</section>
+<section id="results">
+  <div class="fade-up">
+    <p class="section-label">数据成果</p>
+    <h2 class="section-title">阶段性实验结果</h2>
+    <p class="section-desc">已完成多组关键验证实验，数据支持 AI 模型训练与迭代。</p>
+  </div>
+  <div class="results-grid fade-up">
+    <div class="card result-card"><div class="result-value">80%+</div><div class="result-unit">淬灭效率</div><div class="result-label">SP/QM 对荧光淬灭效果</div><div class="result-bar"><div class="result-bar-fill" style="width:80%"></div></div></div>
+    <div class="card result-card"><div class="result-value">&gt;5</div><div class="result-unit">信噪比 S/N</div><div class="result-label">MB-21 靶标组 vs 空白</div><div class="result-bar"><div class="result-bar-fill" style="width:71%"></div></div></div>
+    <div class="card result-card"><div class="result-value">&gt;60%</div><div class="result-unit">对应靶标恢复率</div><div class="result-label">6 组 MB 交叉特异性验证</div><div class="result-bar"><div class="result-bar-fill" style="width:60%"></div></div></div>
+    <div class="card result-card"><div class="result-value">&lt;10%</div><div class="result-unit">非靶标交叉响应</div><div class="result-label">正交性矩阵验证结果</div><div class="result-bar"><div class="result-bar-fill" style="width:10%"></div></div></div>
+  </div>
+  <div class="fade-up" style="margin-top:2.5rem">
+    <h3 style="font-size:1.1rem;color:#fff;margin-bottom:1rem">已完成实验详情</h3>
+    <div class="exp-table-wrap">
+      <table class="exp-table">
+        <thead><tr><th>实验内容</th><th>设计方案</th><th>阶段结果</th><th>对 AI 设计的作用</th></tr></thead>
+        <tbody>
+          <tr><td>SP/QM 在 CS-CD63 支架上的负载验证</td><td>13/16/19 nt 探针与 88 nt 支架链退火，非变性 PAGE</td><td class="tag-good">三种长度均出现迁移上移，选定 13 nt 配置</td><td>确定可行的结构边界与初始候选模板</td></tr>
+          <tr><td>MB-21 与 miR-21 结合验证</td><td>MB-21-5p 与 miR-21-5p 模拟物孵育后 PAGE</td><td class="tag-good">形成迁移较慢的稳定杂交复合物</td><td>提供靶标识别正样本及结构约束</td></tr>
+          <tr><td>QM 对 SP 的淬灭验证</td><td>SP、QM 及 SP+QM 组 FAM 通道荧光检测</td><td class="tag-good">淬灭效率超过 80%</td><td>建立静默态背景和淬灭效率基线</td></tr>
+          <tr><td>MB-21 序列特异性验证</td><td>靶标、随机阴性序列及空白对照，三复孔</td><td class="tag-good">靶标组显著恢复，S/N &gt; 5；阴性组接近空白</td><td>提供特异性分类与信号回归标签</td></tr>
+          <tr><td>多组 MB 交叉特异性验证</td><td>6 种 MB 与对应及非对应 miRNA 交叉配对，共 48 组</td><td class="tag-good">对应靶标恢复率 &gt; 60%，非靶标响应 &lt; 10%</td><td>建立正交性矩阵，支持多靶标模型训练</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<section id="timeline">
+  <div class="fade-up">
+    <p class="section-label">实施计划</p>
+    <h2 class="section-title">下一阶段里程碑</h2>
+    <p class="section-desc">预计每轮 DBTL 周期约 1 个月，持续推进模型迭代。</p>
+  </div>
+  <div class="timeline fade-up">
+    <div class="timeline-item"><div class="t-date">2026.7 末 — 8 上</div><h4>EpCAM 适配体验证</h4><p>完成 EpCAM 适配体结合及链置换特异性验证，获取 PAGE/荧光数据</p></div>
+    <div class="timeline-item"><div class="t-date">2026.8 上</div><h4>训练数据集建立</h4><p>完善酶标仪与 PAGE 数据解析，形成带批次和质量标记的标准化数据集</p></div>
+    <div class="timeline-item"><div class="t-date">2026.8 中</div><h4>模型微调与验证</h4><p>完成链置换动力学与多任务预测模型微调，与传统基线成组对比验证</p></div>
+    <div class="timeline-item"><div class="t-date">2026.8 下</div><h4>首轮 AI 候选合成</h4><p>合成并比较首轮 AI 候选，完成人工基线与 AI 候选同条件对比及失败分析</p></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">miR-AclE</div>
+  <p>基于 AI 优化的 DNA 逻辑网络与分子信标肿瘤精准诊断系统</p>
+  <p style="margin-top:.5rem">ATCG 碱基互补配队 — 天津大学 合成生物学专业 · AI+合成生物创新大赛</p>
+  <p style="margin-top:.8rem;opacity:.5">&#169; 2026 miR-AclE Project</p>
+</footer>
+</div>
+<script>
+const canvas=document.getElementById("bg-canvas"),ctx=canvas.getContext("2d");
+let W,H,particles=[];
+const PAIR_COLORS=["#00e1bb","#a78bfa","#4dabf7","#34d399"];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+window.addEventListener("resize",resize);resize();
+class Particle{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*2+.5;this.color=PAIR_COLORS[Math.floor(Math.random()*PAIR_COLORS.length)];this.alpha=Math.random()*.5+.15}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();ctx.globalAlpha=1}}
+for(let i=0;i<80;i++)particles.push(new Particle());
+function drawConnections(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<150){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=particles[i].color;ctx.globalAlpha=.08*(1-dist/150);ctx.lineWidth=.5;ctx.stroke();ctx.globalAlpha=1}}}}
+function animate(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw()});drawConnections();requestAnimationFrame(animate)}
+animate();
+const nav=document.getElementById("navbar");
+window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",window.scrollY>50));
+const hamburger=document.getElementById("hamburger"),navLinks=document.getElementById("navLinks");
+hamburger.addEventListener("click",()=>navLinks.classList.toggle("open"));
+navLinks.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>navLinks.classList.remove("open")));
+const fadeEls=document.querySelectorAll(".fade-up");
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}})},{threshold:.15});
+fadeEls.forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
