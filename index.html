@@ -9,192 +9,105 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --teal:#00727a;--teal-l:#00a0a8;--teal-d:#005a60;
-  --cyan:#00b4d8;--blue:#4dabf7;--purple:#7c3aed;--green:#10b981;
-  --orange:#f59e0b;
-  --bg:#f8fafc;--bg2:#f0f7fa;--white:#ffffff;
-  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
-  --border:#e2e8f0;--border2:#cbd5e1;
-  --card-grad:linear-gradient(140deg,#d0e8ec 0%,color-mix(in oklab,var(--teal) 18%,#fff) 60%,#e8f4f6 100%);
-  --card-brd:color-mix(in oklab,var(--teal) 25%,rgba(0,0,0,.06));
-  --shadow:0 2px 16px rgba(0,114,122,.08);
-  --shadow-lg:0 12px 40px rgba(0,114,122,.15);
-  --radius:16px;--radius-sm:10px;
+  --bg:#060b14;--bg2:#0a1628;--surface:rgba(255,255,255,.04);
+  --border:rgba(0,225,187,.15);
+  --cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;
+  --green:#34d399;--amber:#fbbf24;
+  --text:#e2e8f0;--text2:#94a3b8;
+  --glow:0 0 40px rgba(0,225,187,.25);
+  --radius:16px;
 }
 html{scroll-behavior:smooth;font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
-a{color:var(--teal);text-decoration:none;transition:color .2s}
-a:hover{color:var(--teal-l)}
+a{color:var(--cyan);text-decoration:none;transition:color .2s}
+a:hover{color:var(--blue)}
 img{max-width:100%;display:block}
-
-#dna-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.13}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(248,250,252,.85);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 2.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow .3s,background .3s}
-nav.scrolled{box-shadow:0 2px 24px rgba(0,114,122,.1);background:rgba(255,255,255,.93)}
-.nav-logo{font-size:1.2rem;font-weight:800;color:var(--teal);letter-spacing:.04em}
+#dna-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(6,11,20,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 30px rgba(0,225,187,.12)}
+.nav-logo{font-size:1.15rem;font-weight:800;color:var(--cyan);letter-spacing:.05em}
 .nav-logo span{color:var(--purple)}
-.nav-links{display:flex;gap:1.8rem;list-style:none}
-.nav-links a{color:var(--text2);font-size:.9rem;font-weight:500;transition:color .2s;position:relative}
-.nav-links a::after{content:"";position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--teal);transition:width .25s;border-radius:2px}
-.nav-links a:hover{color:var(--teal)}
-.nav-links a:hover::after{width:100%}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--text2);font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--cyan)}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
-.nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .3s,opacity .3s}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 5rem;position:relative;z-index:1}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#e8f6f8 0%,#f0f4ff 30%,#fef9f0 60%,#f0fdf9 100%);z-index:-1}
-.hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 40%,rgba(0,179,216,.08) 0%,transparent 70%)}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--white);border:1px solid var(--border2);border-radius:999px;padding:.4rem 1.1rem;font-size:.82rem;color:var(--teal);font-weight:500;margin-bottom:1.8rem;box-shadow:var(--shadow)}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.4rem 1.1rem;font-size:.82rem;color:var(--cyan);font-weight:500;margin-bottom:1.8rem}
 .hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
 .hero h1{font-size:clamp(2.2rem,5.5vw,4.2rem);font-weight:900;line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
-.hero h1 .grad{background:linear-gradient(135deg,var(--teal) 0%,var(--cyan) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero .subtitle{font-size:clamp(1rem,2vw,1.3rem);color:var(--text2);max-width:700px;margin-bottom:1.5rem;font-weight:400}
-.hero .team-tag{font-size:.95rem;color:var(--teal);font-weight:600;letter-spacing:.08em;margin-bottom:.3rem}
-.hero .uni{font-size:.85rem;color:var(--text3);margin-bottom:2.5rem}
-.hero-stats{display:flex;gap:3.5rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
+.hero h1 .grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .subtitle{font-size:clamp(1rem,2vw,1.25rem);color:var(--text2);max-width:680px;margin-bottom:2.5rem}
+.hero .team-tag{font-size:.95rem;color:var(--amber);font-weight:600;letter-spacing:.1em;margin-bottom:.3rem}
+.hero .uni{font-size:.85rem;color:var(--text3,#94a3b8);margin-bottom:3rem}
+.hero-stats{display:flex;gap:3.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:3rem}
 .hero-stat{text-align:center}
-.hero-stat .num{font-size:2.4rem;font-weight:800;color:var(--teal);line-height:1}
-.hero-stat .label{font-size:.8rem;color:var(--text3);margin-top:.3rem;font-weight:500}
-.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);color:var(--text3);font-size:.8rem;animation:bob 2.2s ease-in-out infinite;display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.hero-stat .num{font-size:2.4rem;font-weight:800;color:var(--cyan);line-height:1}
+.hero-stat .label{font-size:.8rem;color:var(--text2);margin-top:.3rem;font-weight:500}
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);color:var(--text2);font-size:.8rem;animation:bob 2.2s ease-in-out infinite;display:flex;flex-direction:column;align-items:center;gap:.3rem}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
-.scroll-hint svg{width:20px;height:20px;stroke:var(--text3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.scroll-hint svg{width:20px;height:20px;stroke:var(--text2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* SECTIONS */
-section{padding:5.5rem 2rem;max-width:1120px;margin:0 auto;position:relative;z-index:1}
-.section-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;color:var(--teal);font-weight:700;margin-bottom:.5rem}
-.section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;margin-bottom:.8rem;color:var(--text);letter-spacing:-.01em;line-height:1.25}
-.section-desc{color:var(--text2);max-width:660px;margin-bottom:2.8rem;font-size:.95rem;line-height:1.8}
+/* QUICK LINKS */
+.quick-links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
+.quick-link{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.6rem 1.4rem;font-size:.9rem;color:var(--text2);transition:all .3s;font-weight:500}
+.quick-link:hover{border-color:rgba(0,225,187,.4);color:var(--cyan);box-shadow:var(--glow);transform:translateY(-2px)}
+.quick-link .q-icon{font-size:1.1rem}
 
-.grad-divider{height:4px;max-width:1120px;margin:0 auto;border-radius:4px;background:linear-gradient(90deg,transparent,var(--teal),var(--cyan),var(--purple),transparent);opacity:.3;margin-bottom:3rem}
-
-/* CARDS */
-.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;transition:transform .3s,box-shadow .3s,border-color .3s;box-shadow:var(--shadow)}
-.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--card-brd)}
-.card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem;background:linear-gradient(135deg,rgba(0,114,122,.12),rgba(124,58,237,.1));border:1px solid rgba(0,114,122,.15)}
-.card h3{font-size:1.08rem;font-weight:700;margin-bottom:.55rem;color:var(--text)}
-.card p{font-size:.88rem;color:var(--text2);line-height:1.75}
-
-/* ABOUT GRID */
-.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem}
-
-/* INNOVATION */
-.innovation-list{display:flex;flex-direction:column;gap:1.4rem}
-.innovation-item{display:flex;gap:1.5rem;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;transition:transform .3s,box-shadow .3s,border-color .3s;box-shadow:var(--shadow)}
-.innovation-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--card-brd)}
-.innovation-num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--cyan));color:#fff;font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center}
-.innovation-item h4{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
-.innovation-item p{font-size:.88rem;color:var(--text2);line-height:1.7}
-
-/* TECH ROUTE */
-.route-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
-.route-card{background:linear-gradient(145deg,#f0f9fb 0%,#e8f4f6 50%,#f5f0ff 100%);border:1px solid var(--card-brd);border-radius:var(--radius);padding:1.6rem;transition:transform .3s,box-shadow .3s}
-.route-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
-.route-card .r-icon{font-size:1.8rem;margin-bottom:.8rem}
-.route-card h4{font-size:.98rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
-.route-card p{font-size:.84rem;color:var(--text2);line-height:1.7}
-
-/* DBTL */
-.dbtl-wrapper{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:1rem}
-.dbtl-step{position:relative;padding:1.8rem 1.4rem;text-align:center;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);z-index:1}
-.dbtl-step::after{content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:1.4rem;color:var(--teal);z-index:2;background:var(--bg);padding:0 .3rem}
-.dbtl-step:last-child::after{display:none}
-.dbtl-step .step-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--cyan));color:#fff;font-weight:800;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center;margin-bottom:.8rem}
-.dbtl-step h4{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
-.dbtl-step p{font-size:.8rem;color:var(--text2);line-height:1.65}
-.dbtl-cycle{margin-top:2rem;padding:1.2rem 1.6rem;background:linear-gradient(135deg,rgba(0,114,122,.06),rgba(124,58,237,.06));border:1px dashed var(--border2);border-radius:var(--radius-sm);text-align:center;font-size:.88rem;color:var(--text2)}
-.dbtl-cycle strong{color:var(--teal)}
-
-/* VIDEO */
-.video-section{background:linear-gradient(145deg,#e8f6f8 0%,#f0f0ff 50%,#f0fdf9 100%);border-radius:var(--radius);padding:3rem;margin:0 2rem;max-width:1120px;margin-left:auto;margin-right:auto;position:relative;z-index:1;border:1px solid var(--border)}
-.video-section .section-label{margin-bottom:.4rem}
-.video-section .section-title{margin-bottom:.5rem}
-.video-section .section-desc{margin-bottom:2rem}
-.video-placeholder{position:relative;width:100%;max-width:800px;margin:0 auto;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;cursor:pointer;background:linear-gradient(145deg,#0a2a3a 0%,#0d1f3c 40%,#1a0a2e 100%);box-shadow:var(--shadow-lg);transition:transform .3s,box-shadow .3s}
-.video-placeholder:hover{transform:scale(1.01);box-shadow:0 16px 50px rgba(0,114,122,.25)}
-.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:background .3s,transform .3s}
-.video-placeholder:hover .play-btn{background:rgba(0,179,216,.3);transform:translate(-50%,-50%) scale(1.1)}
-.play-btn svg{width:28px;height:28px;fill:#fff;margin-left:3px}
-.vid-label{position:absolute;bottom:1.2rem;left:1.4rem;color:rgba(255,255,255,.8);font-size:.85rem;font-weight:500}
-.vid-tag{position:absolute;top:1rem;right:1rem;background:rgba(0,179,216,.25);border:1px solid rgba(0,179,216,.4);border-radius:999px;padding:.25rem .75rem;font-size:.72rem;color:#fff;font-weight:600;letter-spacing:.05em}
-.dna-anim{position:absolute;inset:0;overflow:hidden;opacity:.35}
-.helix-band{position:absolute;width:100%;height:3px;border-radius:50%;background:linear-gradient(90deg,transparent,rgba(0,179,216,.5),rgba(124,58,237,.5),transparent);animation:helix-scroll 4s linear infinite}
-@keyframes helix-scroll{0%{transform:translateY(-100%) rotate(0deg)}100%{transform:translateY(100vh) rotate(360deg)}}
-
-/* DATA TABLE */
-.data-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);background:var(--white)}
-.data-table{width:100%;border-collapse:collapse;font-size:.88rem}
-.data-table thead th{background:linear-gradient(135deg,var(--teal),var(--teal-l));color:#fff;padding:1rem 1.2rem;text-align:left;font-weight:600;white-space:nowrap;border:none}
-.data-table thead th:first-child{border-radius:var(--radius-sm) 0 0 0}
-.data-table thead th:last-child{border-radius:0 var(--radius-sm) 0 0}
-.data-table tbody tr{border-bottom:1px solid var(--border);transition:background .2s}
-.data-table tbody tr:last-child{border-bottom:none}
-.data-table tbody tr:hover{background:rgba(0,114,122,.03)}
-.data-table td{padding:.9rem 1.2rem;color:var(--text2);vertical-align:top;line-height:1.6}
-.data-table td:first-child{font-weight:600;color:var(--text)}
-.tag-good{display:inline-block;background:linear-gradient(135deg,rgba(16,185,129,.12),rgba(0,179,216,.1));color:#059669;border:1px solid rgba(16,185,129,.25);border-radius:999px;padding:.15rem .6rem;font-size:.78rem;font-weight:600;white-space:nowrap}
-.tag-pending{display:inline-block;background:rgba(245,158,11,.1);color:#d97706;border:1px solid rgba(245,158,11,.25);border-radius:999px;padding:.15rem .6rem;font-size:.78rem;font-weight:600;white-space:nowrap}
-
-/* TIMELINE */
-.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
-.timeline-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}
-.timeline-item::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--cyan))}
-.timeline-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
-.t-date{font-size:.75rem;font-weight:700;color:var(--teal);letter-spacing:.05em;margin-bottom:.5rem;text-transform:uppercase}
-.timeline-item h4{font-size:.98rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
-.timeline-item p{font-size:.84rem;color:var(--text2);line-height:1.7}
+/* SECTION PREVIEW (on homepage) */
+.preview-section{padding:3rem 2rem;max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.preview-section h2{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+.preview-section h2 span{font-size:.7rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.2rem .6rem;color:var(--text3);font-weight:500}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:3rem}
+.preview-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;transition:all .3s;cursor:pointer;text-decoration:none;display:block;color:inherit}
+.preview-card:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow);transform:translateY(-4px)}
+.preview-card .pc-icon{font-size:1.6rem;margin-bottom:.8rem}
+.preview-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.preview-card p{font-size:.82rem;color:var(--text2);line-height:1.6}
 
 /* FOOTER */
-footer{background:linear-gradient(135deg,#0a2a3a,#0d1f3c);color:rgba(255,255,255,.8);padding:4rem 2rem 2rem;text-align:center;position:relative;z-index:1;margin-top:4rem}
-.footer-brand{font-size:1.6rem;font-weight:900;color:#fff;letter-spacing:.05em;margin-bottom:.5rem}
-.footer-brand span{background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-footer p{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.8}
-footer .footer-links{margin:1.5rem 0;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
-footer .footer-links a{color:rgba(255,255,255,.7);font-size:.85rem;transition:color .2s}
-footer .footer-links a:hover{color:#fff}
-.footer-bottom{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.1);font-size:.78rem;color:rgba(255,255,255,.35)}
+footer{background:rgba(6,11,20,.95);border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;position:relative;z-index:1}
+.footer-brand{font-size:1.5rem;font-weight:900;color:var(--cyan);letter-spacing:.05em;margin-bottom:.3rem}
+.footer-brand span{color:var(--purple)}
+footer p{font-size:.85rem;color:var(--text2);margin-bottom:.3rem}
+.footer-links{margin:1.5rem 0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.footer-links a{font-size:.85rem;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--cyan)}
+.footer-bottom{margin-top:1.5rem;font-size:.75rem;color:rgba(255,255,255,.2)}
 
 /* ANIMATIONS */
 .fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .fade-up.visible{opacity:1;transform:translateY(0)}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .dbtl-wrapper{grid-template-columns:repeat(2,1fr)}
-  .dbtl-step::after{display:none}
-}
 @media(max-width:768px){
   nav{padding:0 1.2rem}
-  .nav-links{display:none!important;position:absolute;top:64px;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(18px);flex-direction:column;gap:0;padding:1rem;border-bottom:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .nav-links{display:none!important;position:absolute;top:60px;left:0;right:0;background:rgba(6,11,20,.97);backdrop-filter:blur(18px);flex-direction:column;gap:0;padding:1rem;border-bottom:1px solid var(--border)}
   .nav-links.open{display:flex!important}
   .nav-links a{padding:.8rem 1rem;border-bottom:1px solid var(--border)}
-  .nav-links a::after{display:none}
   .nav-hamburger{display:flex}
   .nav-hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
   .nav-hamburger.active span:nth-child(2){opacity:0}
   .nav-hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
   .hero-stats{gap:2rem}
-  .dbtl-wrapper{grid-template-columns:1fr}
-  section{padding:3.5rem 1.2rem}
-  .video-section{padding:2rem 1.2rem}
+  .preview-section{padding:2rem 1.2rem}
+  .preview-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
-
 <canvas id="dna-canvas"></canvas>
-
 <nav id="navbar">
   <div class="nav-logo">miR-<span>AclE</span></div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#about">项目简介</a></li>
-    <li><a href="#innovation">创新点</a></li>
-    <li><a href="#route">技术路线</a></li>
-    <li><a href="#dbtl">DBTL 循环</a></li>
-    <li><a href="#data">数据成果</a></li>
-    <li><a href="#timeline">实施计划</a></li>
+    <li><a href="about.html">项目简介</a></li>
+    <li><a href="innovation.html">创新点</a></li>
+    <li><a href="route.html">技术路线</a></li>
+    <li><a href="dbtl.html">DBTL 循环</a></li>
+    <li><a href="data.html">数据成果</a></li>
+    <li><a href="timeline.html">实施计划</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="菜单">
     <span></span><span></span><span></span>
@@ -202,7 +115,6 @@ footer .footer-links a:hover{color:#fff}
 </nav>
 
 <div class="hero">
-  <div class="hero-bg"></div>
   <div class="hero-badge fade-up"><span class="dot"></span> AI+合成生物创新大赛 · 天津大学</div>
   <p class="team-tag fade-up">ATCG 碱基互补配队</p>
   <h1 class="fade-up"><span class="grad">miR-AclE</span><br>AI 驱动 DNA 逻辑网络</h1>
@@ -214,261 +126,87 @@ footer .footer-links a:hover{color:#fff}
     <div class="hero-stat"><div class="num">>60%</div><div class="label">靶标恢复率</div></div>
     <div class="hero-stat"><div class="num">&lt;10%</div><div class="label">交叉反应</div></div>
   </div>
+  <div class="quick-links fade-up">
+    <a href="about.html" class="quick-link"><span class="q-icon">📖</span>项目简介</a>
+    <a href="innovation.html" class="quick-link"><span class="q-icon">💡</span>创新亮点</a>
+    <a href="route.html" class="quick-link"><span class="q-icon">🔬</span>技术路线</a>
+    <a href="data.html" class="quick-link"><span class="q-icon">📊</span>数据成果</a>
+    <a href="timeline.html" class="quick-link"><span class="q-icon">🗓️</span>实施计划</a>
+  </div>
   <div class="scroll-hint">
-    <span>向下滚动</span>
+    <span>向下浏览</span>
     <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
   </div>
 </div>
 
-<section id="about">
-  <div class="fade-up">
-    <p class="section-label">项目简介</p>
-    <h2 class="section-title">用 AI 重新设计 DNA 逻辑门</h2>
-    <p class="section-desc">miR-AclE 项目旨在开发一套基于 AI 优化的 DNA 分子信标（Molecular Beacon, MB）系统，用于肿瘤相关 miRNA 的高灵敏度、高特异性检测。通过深度学习预测 DNA 链置换动力学，我们能够在湿实验前筛选最优序列组合，大幅缩短研发周期。</p>
-  </div>
-  <div class="about-grid">
-    <div class="card fade-up">
-      <div class="card-icon">🧬</div>
-      <h3>DNA 逻辑网络</h3>
-      <p>基于链置换反应构建逻辑门，将多种 miRNA 信号整合为可计算的输出信号，实现复杂生物信息的分子级处理。</p>
-    </div>
-    <div class="card fade-up">
-      <div class="card-icon">🤖</div>
-      <h3>AI 序列优化</h3>
-      <p>利用深度学习模型预测每条分子信标的淬灭效率、信噪比和特异性，替代传统试错式序列设计。</p>
-    </div>
-    <div class="card fade-up">
-      <div class="card-icon">🔬</div>
-      <h3>肿瘤诊断应用</h3>
-      <p>靶向 EpCAM 等相关 miRNA 标志物，为早期肿瘤筛查提供高灵敏度的分子诊断工具。</p>
-    </div>
-  </div>
-</section>
-
-<section id="innovation">
-  <div class="fade-up">
-    <p class="section-label">创新亮点</p>
-    <h2 class="section-title">三项核心创新</h2>
-    <p class="section-desc">我们在分子信标设计、AI 预测模型和多靶标逻辑网络三个层面实现了创新突破。</p>
-  </div>
-  <div class="innovation-list">
-    <div class="innovation-item fade-up">
-      <div class="innovation-num">1</div>
-      <div>
-        <h4>AI 辅助分子信标序列设计</h4>
-        <p>利用 Transformer 架构学习 DNA 序列-功能关系，预测每条 MB 的淬灭效率与信噪比，预测准确率 &gt;85%，显著减少湿实验试错次数。</p>
-      </div>
-    </div>
-    <div class="innovation-item fade-up">
-      <div class="innovation-num">2</div>
-      <div>
-        <h4>多靶标正交 DNA 逻辑网络</h4>
-        <p>设计 6 组正交分子信标，实现交叉反应 &lt;10%，支持同时检测多个肿瘤相关 miRNA，为多标志物联合诊断奠定基础。</p>
-      </div>
-    </div>
-    <div class="innovation-item fade-up">
-      <div class="innovation-num">3</div>
-      <div>
-        <h4>DBTL 闭环迭代平台</h4>
-        <p>构建 Design-Build-Test-Learn 自动化循环，每轮实验数据反馈至模型，驱动下一轮序列优化，形成持续进化的设计 pipeline。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="route">
-  <div class="fade-up">
-    <p class="section-label">技术路线</p>
-    <h2 class="section-title">从序列设计到数据验证</h2>
-    <p class="section-desc">我们的技术路线分为四个关键环节，形成完整的 AI-湿实验闭环。</p>
-  </div>
-  <div class="route-grid">
-    <div class="route-card fade-up">
-      <div class="r-icon">🧪</div>
-      <h4>SP / QM 模块加载</h4>
-      <p>将报告基因（SP）与淬灭模块（QM）连接至分子信标骨架，构建基础检测单元。</p>
-    </div>
-    <div class="route-card fade-up">
-      <div class="r-icon">🔗</div>
-      <h4>MB-21 结合验证</h4>
-      <p>验证 MB-21 与 miR-21-5p 模拟物的杂交特异性，确认目标识别能力。</p>
-    </div>
-    <div class="route-card fade-up">
-      <div class="r-icon">📊</div>
-      <h4>荧光淬灭测试</h4>
-      <p>通过酶标仪检测 FAM 通道荧光强度，计算淬灭效率，确立静默态基线。</p>
-    </div>
-    <div class="route-card fade-up">
-      <div class="r-icon">🧬</div>
-      <h4>特异性矩阵验证</h4>
-      <p>6×6 交叉配对实验（48 组），建立正交性矩阵，支持多靶标并行检测。</p>
-    </div>
-  </div>
-</section>
-
-<section id="dbtl">
-  <div class="fade-up">
-    <p class="section-label">迭代引擎</p>
-    <h2 class="section-title">DBTL 闭环优化</h2>
-    <p class="section-desc">Design · Build · Test · Learn — 四轮迭代循环，持续逼近最优序列组合。</p>
-  </div>
-  <div class="dbtl-wrapper fade-up">
-    <div class="dbtl-step">
-      <div class="step-num">D</div>
-      <h4>Design 设计</h4>
-      <p>AI 模型生成候选序列，预测功能参数，筛选 Top-K 组合</p>
-    </div>
-    <div class="dbtl-step">
-      <div class="step-num">B</div>
-      <h4>Build 合成</h4>
-      <p>固相合成分子信标，PAGE 纯化，浓度定量</p>
-    </div>
-    <div class="dbtl-step">
-      <div class="step-num">T</div>
-      <h4>Test 测试</h4>
-      <p>荧光检测 + PAGE 验证，获取淬灭效率、信噪比、特异性数据</p>
-    </div>
-    <div class="dbtl-step">
-      <div class="step-num">L</div>
-      <h4>Learn 学习</h4>
-      <p>实验数据反馈至训练集，模型微调，进入下一轮迭代</p>
-    </div>
-  </div>
-  <div class="dbtl-cycle fade-up">
-    预计每轮 DBTL 周期约 <strong>1 个月</strong>，目前已完成第一轮设计-合成-测试闭环
-  </div>
-</section>
-
-<div class="video-section fade-up" style="margin-top:2rem">
-  <p class="section-label">实验记录</p>
-  <h2 class="section-title">湿实验过程视频</h2>
-  <p class="section-desc">序列设计、分子信标合成、荧光检测等关键实验步骤的视频记录（录制中）。</p>
-  <div class="video-placeholder" id="videoPlaceholder">
-    <div class="dna-anim" id="dnaAnim"></div>
-    <div class="vid-tag">实验视频</div>
-    <div class="play-btn">
-      <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-    </div>
-    <div class="vid-label">▶ 实验过程记录（即将发布）</div>
+<div class="preview-section">
+  <h2>探索项目 <span>点击跳转详情</span></h2>
+  <div class="preview-grid">
+    <a href="about.html" class="preview-card fade-up">
+      <div class="pc-icon">🧬</div>
+      <h3>项目简介</h3>
+      <p>了解 miR-AclE 项目的核心目标与背景</p>
+    </a>
+    <a href="innovation.html" class="preview-card fade-up">
+      <div class="pc-icon">💡</div>
+      <h3>创新亮点</h3>
+      <p>三项核心技术创新与突破</p>
+    </a>
+    <a href="route.html" class="preview-card fade-up">
+      <div class="pc-icon">🔬</div>
+      <h3>技术路线</h3>
+      <p>从序列设计到数据验证的完整流程</p>
+    </a>
+    <a href="dbtl.html" class="preview-card fade-up">
+      <div class="pc-icon">🔄</div>
+      <h3>DBTL 循环</h3>
+      <p>Design-Build-Test-Learn 迭代引擎</p>
+    </a>
+    <a href="data.html" class="preview-card fade-up">
+      <div class="pc-icon">📊</div>
+      <h3>数据成果</h3>
+      <p>第一轮实验结果与关键指标</p>
+    </a>
+    <a href="timeline.html" class="preview-card fade-up">
+      <div class="pc-icon">🗓️</div>
+      <h3>实施计划</h3>
+      <p>下一阶段里程碑与时间安排</p>
+    </a>
   </div>
 </div>
-
-<section id="data">
-  <div class="fade-up">
-    <p class="section-label">数据成果</p>
-    <h2 class="section-title">第一轮实验结果汇总</h2>
-    <p class="section-desc">已完成 5 组关键验证实验，各项指标均达到预期目标。</p>
-  </div>
-  <div class="data-table-wrap fade-up">
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>实验名称</th>
-          <th>方法</th>
-          <th>结果</th>
-          <th>意义</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>SP / QM 模块加载验证</td>
-          <td>SP、QM 单独及组合 PAGE 电泳分析</td>
-          <td><span class="tag-good">两条条带清晰可见</span></td>
-          <td>确认模块连接成功，无降解或异常聚集</td>
-        </tr>
-        <tr>
-          <td>MB-21 与 miR-21 结合验证</td>
-          <td>MB-21-5p 与 miR-21-5p 模拟物孵育后 PAGE</td>
-          <td><span class="tag-good">形成迁移较慢的稳定杂交复合物</span></td>
-          <td>提供靶标识别正样本及结构约束</td>
-        </tr>
-        <tr>
-          <td>QM 对 SP 的淬灭验证</td>
-          <td>SP、QM 及 SP+QM 组 FAM 通道荧光检测</td>
-          <td><span class="tag-good">淬灭效率超过 80%</span></td>
-          <td>建立静默态背景和淬灭效率基线</td>
-        </tr>
-        <tr>
-          <td>MB-21 序列特异性验证</td>
-          <td>靶标、随机阴性序列及空白对照，三复孔</td>
-          <td><span class="tag-good">靶标组显著恢复，S/N &gt; 5；阴性组接近空白</span></td>
-          <td>提供特异性分类与信号回归标签</td>
-        </tr>
-        <tr>
-          <td>多组 MB 交叉特异性验证</td>
-          <td>6 种 MB 与对应及非对应 miRNA 交叉配对，共 48 组</td>
-          <td><span class="tag-good">对应靶标恢复率 &gt; 60%，非靶标响应 &lt; 10%</span></td>
-          <td>建立正交性矩阵，支持多靶标模型训练</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section id="timeline">
-  <div class="fade-up">
-    <p class="section-label">实施计划</p>
-    <h2 class="section-title">下一阶段里程碑</h2>
-    <p class="section-desc">预计每轮 DBTL 周期约 1 个月，持续推进模型迭代。</p>
-  </div>
-  <div class="timeline fade-up">
-    <div class="timeline-item">
-      <div class="t-date">2026.7 末 — 8 上</div>
-      <h4>EpCAM 适配体验证</h4>
-      <p>完成 EpCAM 适配体结合及链置换特异性验证，获取 PAGE/荧光数据</p>
-    </div>
-    <div class="timeline-item">
-      <div class="t-date">2026.8 上</div>
-      <h4>训练数据集建立</h4>
-      <p>完善酶标仪与 PAGE 数据解析，形成带批次和质量标记的标准化数据集</p>
-    </div>
-    <div class="timeline-item">
-      <div class="t-date">2026.8 中</div>
-      <h4>模型微调与验证</h4>
-      <p>完成链置换动力学与多任务预测模型微调，与传统基线成组对比验证</p>
-    </div>
-    <div class="timeline-item">
-      <div class="t-date">2026.8 下</div>
-      <h4>首轮 AI 候选合成</h4>
-      <p>合成并比较首轮 AI 候选，完成人工基线与 AI 候选同条件对比及失败分析</p>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="footer-brand">miR-<span>AclE</span></div>
   <p>基于 AI 优化的 DNA 逻辑网络与分子信标肿瘤精准诊断系统</p>
-  <div class="footer-links">
-    <a href="#about">项目简介</a>
-    <a href="#innovation">创新亮点</a>
-    <a href="#route">技术路线</a>
-    <a href="#data">数据成果</a>
-    <a href="#timeline">实施计划</a>
-  </div>
   <p>ATCG 碱基互补配队 — 天津大学 合成生物学专业 · AI+合成生物创新大赛</p>
+  <div class="footer-links">
+    <a href="about.html">项目简介</a>
+    <a href="innovation.html">创新亮点</a>
+    <a href="route.html">技术路线</a>
+    <a href="dbtl.html">DBTL 循环</a>
+    <a href="data.html">数据成果</a>
+    <a href="timeline.html">实施计划</a>
+  </div>
   <div class="footer-bottom">© 2026 miR-AclE Project. All rights reserved.</div>
 </footer>
 
 <script>
-const canvas=document.getElementById('dna-canvas');
-const ctx=canvas.getContext('2d');
+const canvas=document.getElementById('dna-canvas'),ctx=canvas.getContext('2d');
 let W,H,particles=[];
-const COLORS=['#00727a','#00b4d8','#7c3aed','#10b981','#4dabf7'];
+const COLORS=['#00e1bb','#a78bfa','#4dabf7','#34d399'];
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
 window.addEventListener('resize',resize);resize();
-class P{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;this.r=Math.random()*1.8+.4;this.color=COLORS[Math.floor(Math.random()*COLORS.length)];this.alpha=Math.random()*.35+.08;this.phase=Math.random()*Math.PI*2}update(){this.x+=this.vx;this.y+=this.vy;this.phase+=.02;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1}draw(){const pulse=Math.sin(this.phase)*.15+1;ctx.beginPath();ctx.arc(this.x,this.y,this.r*pulse,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();ctx.globalAlpha=1}}
-for(let i=0;i<60;i++)particles.push(new P());
-function drawLines(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<130){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=particles[i].color;ctx.globalAlpha=.06*(1-dist/130);ctx.lineWidth=.6;ctx.stroke();ctx.globalAlpha=1}}}}
+class P{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*2+.5;this.color=COLORS[Math.floor(Math.random()*COLORS.length)];this.alpha=Math.random()*.5+.15}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();ctx.globalAlpha=1}}
+for(let i=0;i<80;i++)particles.push(new P());
+function drawLines(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<150){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=particles[i].color;ctx.globalAlpha=.08*(1-dist/150);ctx.lineWidth=.5;ctx.stroke();ctx.globalAlpha=1}}}}
 function animate(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw()});drawLines();requestAnimationFrame(animate)}
 animate();
-(function(){const container=document.getElementById('dnaAnim');for(let i=0;i<20;i++){const band=document.createElement('div');band.className='helix-band';band.style.top=(i*8)+'%';band.style.animationDelay=(i*0.2)+'s';band.style.animationDuration=(3+Math.random()*2)+'s';container.appendChild(band)}})();
-const nav=document.getElementById('navbar');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40));
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
 hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});
 navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')}));
 const fadeEls=document.querySelectorAll('.fade-up');
-const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.12});
 fadeEls.forEach(el=>observer.observe(el));
 </script>
 </body>

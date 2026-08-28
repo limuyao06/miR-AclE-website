@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据成果 | miR-AclE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060b14;--bg2:#0a1628;--surface:rgba(255,255,255,.04);
+  --border:rgba(0,225,187,.15);
+  --cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;
+  --green:#34d399;--amber:#fbbf24;
+  --text:#e2e8f0;--text2:#94a3b8;
+  --glow:0 0 40px rgba(0,225,187,.25);
+  --radius:16px;--radius-sm:10px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+a{color:var(--cyan);text-decoration:none;transition:color .2s}
+a:hover{color:var(--blue)}
+img{max-width:100%;display:block}
+
+/* DNA Canvas */
+#dna-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(6,11,20,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 30px rgba(0,225,187,.12)}
+.nav-logo{font-size:1.15rem;font-weight:800;color:var(--cyan);letter-spacing:.05em}
+.nav-logo span{color:var(--purple)}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--text2);font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--cyan)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px}
+
+/* BACK BTN */
+.back-btn{display:inline-flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.85rem;margin-bottom:2rem;transition:color .2s}
+.back-btn:hover{color:var(--cyan)}
+.back-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* SECTIONS */
+.page-content{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:6rem 2rem 4rem}
+.section-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;color:var(--cyan);font-weight:700;margin-bottom:.5rem}
+.section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:.8rem;color:#fff;line-height:1.3}
+.section-desc{color:var(--text2);margin-bottom:2.5rem;font-size:.95rem;line-height:1.8}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:border-color .3s,box-shadow .3s,transform .3s}
+.card:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow);transform:translateY(-4px)}
+.card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem;background:linear-gradient(135deg,rgba(0,225,187,.15),rgba(167,139,250,.15));border:1px solid var(--border)}
+.card h3{font-size:1.05rem;font-weight:600;margin-bottom:.5rem;color:#fff}
+.card p{font-size:.88rem;color:var(--text2);line-height:1.7}
+
+/* INNOVATION ITEMS */
+.innovation-item{display:flex;gap:1.5rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:border-color .3s,box-shadow .3s}
+.innovation-item:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow)}
+.innovation-num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.innovation-item h4{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.innovation-item p{font-size:.88rem;color:var(--text2);line-height:1.7}
+
+/* ROUTE GRID */
+.route-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem}
+.route-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;transition:border-color .3s,box-shadow .3s,transform .3s}
+.route-card:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow);transform:translateY(-3px)}
+.route-card .r-icon{font-size:1.8rem;margin-bottom:.8rem}
+.route-card h4{font-size:.98rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.route-card p{font-size:.84rem;color:var(--text2);line-height:1.7}
+
+/* DBTL */
+.dbtl-wrapper{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:1rem}
+.dbtl-step{position:relative;padding:1.8rem 1.4rem;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .3s,box-shadow .3s}
+.dbtl-step:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow)}
+.dbtl-step::after{content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:1.4rem;color:var(--cyan);z-index:2;background:var(--bg);padding:0 .3rem}
+.dbtl-step:last-child::after{display:none}
+.dbtl-step .step-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;font-weight:800;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center;margin-bottom:.8rem}
+.dbtl-step h4{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.dbtl-step p{font-size:.8rem;color:var(--text2);line-height:1.65}
+
+/* TABLE */
+.data-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+.data-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.data-table thead th{background:linear-gradient(135deg,rgba(0,225,187,.2),rgba(167,139,250,.15));color:var(--cyan);padding:1rem 1.2rem;text-align:left;font-weight:600;white-space:nowrap}
+.data-table tbody tr{border-bottom:1px solid var(--border);transition:background .2s}
+.data-table tbody tr:last-child{border-bottom:none}
+.data-table tbody tr:hover{background:rgba(0,225,187,.04)}
+.data-table td{padding:.9rem 1.2rem;color:var(--text2);vertical-align:top;line-height:1.6}
+.data-table td:first-child{font-weight:600;color:#fff}
+.tag-good{display:inline-block;background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.3);border-radius:999px;padding:.15rem .6rem;font-size:.78rem;font-weight:600;white-space:nowrap}
+
+/* TIMELINE */
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem}
+.timeline-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:border-color .3s,box-shadow .3s,transform .3s;position:relative;overflow:hidden}
+.timeline-item::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--purple))}
+.timeline-item:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow);transform:translateY(-3px)}
+.t-date{font-size:.75rem;font-weight:700;color:var(--cyan);letter-spacing:.05em;margin-bottom:.5rem;text-transform:uppercase}
+.timeline-item h4{font-size:.98rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.timeline-item p{font-size:.84rem;color:var(--text2);line-height:1.7}
+
+/* VIDEO PLACEHOLDER */
+.video-placeholder{position:relative;width:100%;max-width:700px;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;cursor:pointer;background:linear-gradient(145deg,#0a1628 0%,#0d1f3c 40%,#1a0a2e 100%);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
+.video-placeholder:hover{border-color:rgba(0,225,187,.4);box-shadow:var(--glow)}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.video-placeholder:hover .play-btn{background:rgba(0,225,187,.2);transform:translate(-50%,-50%) scale(1.1)}
+.play-btn svg{width:24px;height:24px;fill:#fff;margin-left:2px}
+.vid-label{position:absolute;bottom:1rem;left:1.2rem;color:rgba(255,255,255,.7);font-size:.82rem}
+.vid-tag{position:absolute;top:.8rem;right:.8rem;background:rgba(0,225,187,.2);border:1px solid rgba(0,225,187,.3);border-radius:999px;padding:.2rem .7rem;font-size:.7rem;color:#fff;font-weight:600;letter-spacing:.05em}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){.dbtl-wrapper{grid-template-columns:repeat(2,1fr)}.dbtl-step::after{display:none}}
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none!important;position:absolute;top:60px;left:0;right:0;background:rgba(6,11,20,.97);backdrop-filter:blur(18px);flex-direction:column;gap:0;padding:1rem;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex!important}
+  .nav-links a{padding:.8rem 1rem;border-bottom:1px solid var(--border)}
+  .nav-hamburger{display:flex}
+  .nav-hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .nav-hamburger.active span:nth-child(2){opacity:0}
+  .nav-hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  .dbtl-wrapper{grid-template-columns:1fr}
+  .page-content{padding:5rem 1.2rem 3rem}
+}
+</style>
+</head>
+<body>
+<canvas id="dna-canvas"></canvas>
+<nav id="navbar">
+  <a href="/" class="nav-logo">miR-<span>AclE</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="about.html">项目简介</a></li>
+    <li><a href="innovation.html">创新点</a></li>
+    <li><a href="route.html">技术路线</a></li>
+    <li><a href="dbtl.html">DBTL 循环</a></li>
+    <li><a href="data.html">数据成果</a></li>
+    <li><a href="timeline.html">实施计划</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="菜单">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+  <a href="/" class="back-btn fade-up"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回首页</a>
+  <div class="fade-up">
+    <p class="section-label">Results</p>
+    <h1 class="section-title">第一轮实验结果汇总</h1>
+    <p class="section-desc">已完成 5 组关键验证实验，各项指标均达到预期目标。</p>
+  </div>
+  <div class="data-table-wrap fade-up">
+    <table class="data-table">
+      <thead>
+        <tr><th>实验名称</th><th>方法</th><th>结果</th><th>意义</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SP / QM 模块加载验证</td><td>SP、QM 单独及组合 PAGE 电泳分析</td><td><span class="tag-good">两条条带清晰可见</span></td><td>确认模块连接成功，无降解或异常聚集</td></tr>
+        <tr><td>MB-21 与 miR-21 结合验证</td><td>MB-21-5p 与 miR-21-5p 模拟物孵育后 PAGE</td><td><span class="tag-good">形成迁移较慢的稳定杂交复合物</span></td><td>提供靶标识别正样本及结构约束</td></tr>
+        <tr><td>QM 对 SP 的淬灭验证</td><td>SP、QM 及 SP+QM 组 FAM 通道荧光检测</td><td><span class="tag-good">淬灭效率超过 80%</span></td><td>建立静默态背景和淬灭效率基线</td></tr>
+        <tr><td>MB-21 序列特异性验证</td><td>靶标、随机阴性序列及空白对照，三复孔</td><td><span class="tag-good">靶标组显著恢复，S/N > 5；阴性组接近空白</span></td><td>提供特异性分类与信号回归标签</td></tr>
+        <tr><td>多组 MB 交叉特异性验证</td><td>6 种 MB 与对应及非对应 miRNA 交叉配对，共 48 组</td><td><span class="tag-good">对应靶标恢复率 > 60%，非靶标响应 < 10%</span></td><td>建立正交性矩阵，支持多靶标模型训练</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<footer style="background:rgba(6,11,20,.95);border-top:1px solid var(--border);padding:2rem;text-align:center;position:relative;z-index:1">
+  <div style="font-size:1.3rem;font-weight:800;color:var(--cyan);letter-spacing:.05em;margin-bottom:.4rem">miR-<span style="color:var(--purple)">AclE</span></div>
+  <p style="font-size:.85rem;color:var(--text2);margin-bottom:.5rem">基于 AI 优化的 DNA 逻辑网络与分子信标肿瘤精准诊断系统</p>
+  <p style="font-size:.8rem;color:var(--text3)">ATCG 碱基互补配队 — 天津大学 合成生物学专业 · AI+合成生物创新大赛</p>
+  <div style="margin-top:1.2rem;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap">
+    <a href="about.html" style="font-size:.8rem;color:var(--text2)">项目简介</a>
+    <a href="innovation.html" style="font-size:.8rem;color:var(--text2)">创新点</a>
+    <a href="route.html" style="font-size:.8rem;color:var(--text2)">技术路线</a>
+    <a href="dbtl.html" style="font-size:.8rem;color:var(--text2)">DBTL 循环</a>
+    <a href="data.html" style="font-size:.8rem;color:var(--text2)">数据成果</a>
+    <a href="timeline.html" style="font-size:.8rem;color:var(--text2)">实施计划</a>
+  </div>
+  <p style="margin-top:1.5rem;font-size:.75rem;color:rgba(255,255,255,.25)">&#169; 2026 miR-AclE Project</p>
+</footer>
+<script>
+const canvas=document.getElementById('dna-canvas'),ctx=canvas.getContext('2d');
+let W,H,particles=[];
+const COLORS=['#00e1bb','#a78bfa','#4dabf7','#34d399'];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+window.addEventListener('resize',resize);resize();
+class P{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*2+.5;this.color=COLORS[Math.floor(Math.random()*COLORS.length)];this.alpha=Math.random()*.5+.15}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();ctx.globalAlpha=1}}
+for(let i=0;i<80;i++)particles.push(new P());
+function drawLines(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<150){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=particles[i].color;ctx.globalAlpha=.08*(1-dist/150);ctx.lineWidth=.5;ctx.stroke();ctx.globalAlpha=1}}}}
+function animate(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw()});drawLines();requestAnimationFrame(animate)}
+animate();
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40));
+const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')}));
+const fadeEls=document.querySelectorAll('.fade-up');
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.12});
+fadeEls.forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
