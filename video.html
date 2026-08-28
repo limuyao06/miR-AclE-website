@@ -8,79 +8,117 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#060b14;--surface:rgba(255,255,255,.04);--border:rgba(0,225,187,.15);--cyan:#00e1bb;--purple:#a78bfa;--text:#e2e8f0;--text2:#94a3b8}
-body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',system-ui,sans-serif;line-height:1.7}
+:root{--bg:#050d1a;--surface:rgba(255,255,255,.04);--border:rgba(0,225,187,.18);--cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;--green:#34d399;--amber:#fbbf24;--text:#e8ede8;--text2:#8899b0;--radius:18px}
+html{scroll-behavior:auto;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
 a{color:var(--cyan);text-decoration:none}
-#dna-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(6,11,20,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2.5rem;height:60px;display:flex;align-items:center;justify-content:space-between}
-nav.scrolled{box-shadow:0 2px 30px rgba(0,225,187,.12)}
-.nav-logo{font-size:1.15rem;font-weight:800;color:var(--cyan);letter-spacing:.05em}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 3rem;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:1.15rem;font-weight:800;color:var(--cyan);letter-spacing:.06em}
 .nav-logo span{color:var(--purple)}
-.nav-links{display:flex;gap:1.5rem;list-style:none}
-.nav-links a{color:var(--text2);font-size:.88rem;font-weight:500}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text2);font-size:.88rem;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--cyan)}
-.back-btn{display:inline-flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.85rem;margin-bottom:2rem;transition:color .2s}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px}
+.page-header{padding:6rem 2rem 2rem;max-width:900px;margin:0 auto}
+.page-header h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:#fff;letter-spacing:-.02em;margin-bottom:.5rem}
+.page-header .tag{display:inline-block;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:999px;padding:.3rem 1rem;font-size:.78rem;color:var(--purple);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+.back-btn{display:inline-flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.85rem;margin-bottom:1.5rem;transition:color .2s}
 .back-btn:hover{color:var(--cyan)}
 .back-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
-.page-content{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:6rem 2rem 4rem}
-.section-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;color:var(--cyan);font-weight:700;margin-bottom:.5rem}
-.section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:.8rem;color:#fff}
-.section-desc{color:var(--text2);margin-bottom:2.5rem;font-size:.95rem}
-.video-placeholder{position:relative;width:100%;max-width:750px;aspect-ratio:16/9;border-radius:16px;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,#0a1628,#1a0a2e);border:1px solid var(--border);margin:0 auto}
-.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center}
-.play-btn svg{width:28px;height:28px;fill:#fff;margin-left:3px}
-.vid-label{position:absolute;bottom:1rem;left:1.2rem;color:rgba(255,255,255,.7);font-size:.85rem}
-.vid-tag{position:absolute;top:.8rem;right:.8rem;background:rgba(0,225,187,.2);border:1px solid rgba(0,225,187,.3);border-radius:999px;padding:.2rem .7rem;font-size:.7rem;color:#fff;font-weight:600}
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
-@media(max-width:768px){nav{padding:0 1.2rem}.nav-links{display:none}}
+.content{max-width:900px;margin:0 auto;padding:0 2rem 4rem;position:relative;z-index:1}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;margin:2rem 0}
+.video-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .3s,transform .3s}
+.video-card:hover{border-color:rgba(0,225,187,.35);transform:translateY(-3px)}
+.video-thumb{height:160px;background:linear-gradient(135deg,rgba(0,225,187,.1),rgba(167,139,250,.1));display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
+.video-thumb .play-btn{width:56px;height:56px;border-radius:50%;background:rgba(0,225,187,.2);border:2px solid var(--cyan);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+.video-thumb:hover .play-btn{background:rgba(0,225,187,.35);transform:scale(1.1)}
+.video-thumb .play-btn svg{width:24px;height:24px;stroke:var(--cyan);fill:none;stroke-width:2;margin-left:3px}
+.video-info{padding:1.2rem}
+.video-info h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.3rem}
+.video-info p{font-size:.82rem;color:var(--text2)}
+.video-info .duration{font-size:.75rem;color:var(--cyan);margin-top:.5rem}
+ Coming Soon Card
+.video-card.coming-soon .video-thumb{background:rgba(255,255,255,.02);cursor:default}
+.video-card.coming-soon .play-btn{border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.03)}
+.video-card.coming-soon .play-btn svg{stroke:var(--text2)}
+.video-card.coming-soon .video-info p{color:var(--text2);font-style:italic}
+@media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}.video-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<canvas id="dna-canvas"></canvas>
 <nav id="navbar">
-  <a href="/" class="nav-logo">miR-<span>AclE</span></a>
-  <ul class="nav-links">
+  <a href="index.html" class="nav-logo">miR-<span>AclE</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">首页</a></li>
     <li><a href="about.html">项目简介</a></li>
-    <li><a href="innovation.html">创新点</a></li>
+    <li><a href="innovation.html">创新亮点</a></li>
     <li><a href="route.html">技术路线</a></li>
-    <li><a href="dbtl.html">DBTL 循环</a></li>
+    <li><a href="dbtl.html">DBTL循环</a></li>
     <li><a href="data.html">数据成果</a></li>
-    <li><a href="timeline.html">实施计划</a></li>
+    <li><a href="timeline.html">项目时间线</a></li>
+    <li><a href="video.html">实验视频</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
 </nav>
-<div class="page-content">
-  <a href="/" class="back-btn fade-up"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回首页</a>
-  <div class="fade-up">
-    <p class="section-label">Videos</p>
-    <h1 class="section-title">实验过程视频</h1>
-    <p class="section-desc">序列设计、分子信标合成、荧光检测等关键实验步骤的视频记录（录制中）。</p>
-  </div>
-  <div class="video-placeholder fade-up">
-    <div class="vid-tag">实验视频</div>
-    <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-    <div class="vid-label">▶ 实验过程记录（即将发布）</div>
+
+<div class="page-header">
+  <a href="index.html" class="back-btn"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回首页</a>
+  <span class="tag">Video</span>
+  <h1>实验视频</h1>
+</div>
+
+<div class="content">
+  <p style="color:var(--text2);margin-bottom:2rem">关键实验步骤的视频记录，展示从基因构建到体内验证的完整流程。</p>
+
+  <div class="video-grid">
+    <div class="video-card coming-soon">
+      <div class="video-thumb">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <div class="video-info">
+        <h3>① 质粒构建过程</h3>
+        <p>Golden Gate组装与Gibson组装实验视频</p>
+        <div class="duration">📹 录制中...</div>
+      </div>
+    </div>
+    <div class="video-card coming-soon">
+      <div class="video-thumb">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <div class="video-info">
+        <h3>② 细菌转化与筛选</h3>
+        <p>热激转化、抗生素筛选与菌落PCR</p>
+        <div class="duration">📹 录制中...</div>
+      </div>
+    </div>
+    <div class="video-card coming-soon">
+      <div class="video-thumb">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <div class="video-info">
+        <h3>③ 荧光表达检测</h3>
+        <p>荧光显微镜观察与酶标仪定量检测</p>
+        <div class="duration">📹 录制中...</div>
+      </div>
+    </div>
+    <div class="video-card coming-soon">
+      <div class="video-thumb">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <div class="video-info">
+        <h3>④ 小鼠口服与成像</h3>
+        <p>工程菌口服递送与活体荧光成像</p>
+        <div class="duration">📹 即将录制</div>
+      </div>
+    </div>
   </div>
 </div>
-<footer style="background:rgba(6,11,20,.95);border-top:1px solid var(--border);padding:2rem;text-align:center;position:relative;z-index:1">
-  <p style="font-size:.85rem;color:var(--text2)">ATCG 碱基互补配队 — 天津大学 合成生物学专业 · AI+合成生物创新大赛</p>
-  <p style="margin-top:.8rem;font-size:.75rem;color:rgba(255,255,255,.25)">&#169; 2026 miR-AclE Project</p>
-</footer>
+
 <script>
-const canvas=document.getElementById('dna-canvas'),ctx=canvas.getContext('2d');
-let W,H,particles=[];
-const COLORS=['#00e1bb','#a78bfa','#4dabf7','#34d399'];
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
-window.addEventListener('resize',resize);resize();
-class P{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*2+.5;this.color=COLORS[Math.floor(Math.random()*COLORS.length)];this.alpha=Math.random()*.5+.15}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();ctx.globalAlpha=1}}
-for(let i=0;i<80;i++)particles.push(new P());
-function drawLines(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<150){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=particles[i].color;ctx.globalAlpha=.08*(1-dist/150);ctx.lineWidth=.5;ctx.stroke();ctx.globalAlpha=1}}}}
-function animate(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw()});drawLines();requestAnimationFrame(animate)}
-animate();
-window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40));
-const fadeEls=document.querySelectorAll('.fade-up');
-const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.12});
-fadeEls.forEach(el=>observer.observe(el));
+const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')}));
 </script>
 </body>
 </html>
