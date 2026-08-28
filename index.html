@@ -75,7 +75,7 @@ nav.scrolled{box-shadow:0 2px 40px rgba(0,225,187,.15)}
 .explore-card p{font-size:.88rem;color:var(--text2);line-height:1.75;position:relative;z-index:1}
 .explore-card .card-arrow{position:absolute;bottom:1.8rem;right:1.8rem;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:all .4s cubic-bezier(.4,0,.2,1);z-index:1}
 .explore-card:hover .card-arrow{background:rgba(0,225,187,.2);border-color:rgba(0,225,187,.4);transform:translate(5px,-5px)}
-.explore-card .card-arrow svg{width:14px;height:14px;stroke:var(--text3,#94a3b8);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s}
+.explore-card .card-arrow svg{width:14px;height:14px;stroke:#94a3b8;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s}
 .explore-card:hover .card-arrow svg{stroke:var(--cyan)}
 
 /* Scroll buttons */
@@ -176,37 +176,37 @@ footer p{font-size:.85rem;color:var(--text2);margin-bottom:.3rem}
       <div class="explore-fade left"></div>
       <div class="explore-fade right"></div>
     <div class="explore-scroll" id="exploreScroll">
-      <a href="about.html" class="explore-card fade-up" onmousemove="this.style.setProperty('--mx',event.offsetX*'100%/this.offsetWidth+''%');this.style.setProperty('--my',event.offsetY*'100%/this.offsetHeight+'%')">
+      <a href="about.html" class="explore-card fade-up" data-hover>
         <div class="card-icon">🧬</div>
         <h3>项目简介</h3>
         <p>了解 miR-AclE 项目的核心目标、研究背景与团队信息</p>
         <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
-      <a href="innovation.html" class="explore-card fade-up" onmousemove="this.style.setProperty('--mx',event.offsetX*'100%/this.offsetWidth+''%');this.style.setProperty('--my',event.offsetY*'100%/this.offsetHeight+'%')">
+      <a href="innovation.html" class="explore-card fade-up" data-hover>
         <div class="card-icon">💡</div>
         <h3>创新亮点</h3>
         <p>三项核心技术创新：AI 序列设计、正交 DNA 网络、DBTL 闭环</p>
         <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
-      <a href="route.html" class="explore-card fade-up" onmousemove="this.style.setProperty('--mx',event.offsetX*'100%/this.offsetWidth+''%');this.style.setProperty('--my',event.offsetY*'100%/this.offsetHeight+'%')">
+      <a href="route.html" class="explore-card fade-up" data-hover>
         <div class="card-icon">🔬</div>
         <h3>技术路线</h3>
         <p>从序列设计到数据验证的完整 AI-湿实验闭环流程</p>
         <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
-      <a href="dbtl.html" class="explore-card fade-up" onmousemove="this.style.setProperty('--mx',event.offsetX*'100%/this.offsetWidth+''%');this.style.setProperty('--my',event.offsetY*'100%/this.offsetHeight+'%')">
+      <a href="dbtl.html" class="explore-card fade-up" data-hover>
         <div class="card-icon">🔄</div>
         <h3>DBTL 循环</h3>
         <p>Design-Build-Test-Learn 迭代引擎，驱动序列持续优化</p>
         <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
-      <a href="data.html" class="explore-card fade-up" onmousemove="this.style.setProperty('--mx',event.offsetX*'100%/this.offsetWidth+''%');this.style.setProperty('--my',event.offsetY*'100%/this.offsetHeight+'%')">
+      <a href="data.html" class="explore-card fade-up" data-hover>
         <div class="card-icon">📊</div>
         <h3>数据成果</h3>
         <p>第一轮实验结果：淬灭效率 80%+，信噪比 &gt;5，交叉反应 &lt;10%</p>
         <div class="card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
-      <a href="timeline.html" class="explore-card fade-up" onmousemove="this.style.setProperty('--mx',event.offsetX*'100%/this.offsetWidth+''%');this.style.setProperty('--my',event.offsetY*'100%/this.offsetHeight+'%')">
+      <a href="timeline.html" class="explore-card fade-up" data-hover>
         <div class="card-icon">🗓️</div>
         <h3>实施计划</h3>
         <p>下一阶段里程碑：EpCAM 验证、数据集建立、模型微调与候选合成</p>
@@ -321,6 +321,14 @@ if(exploreScroll){
 const fadeEls=document.querySelectorAll('.fade-up');
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -20px 0px'});
 fadeEls.forEach(el=>observer.observe(el));
+
+document.querySelectorAll('.explore-card[data-hover]').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');
+    card.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%');
+  });
+});
 </script>
 </body>
 </html>
