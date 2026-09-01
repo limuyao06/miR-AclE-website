@@ -12,7 +12,7 @@
   --bg:#050d1a;--bg2:#0a1a2e;--surface:rgba(255,255,255,.04);
   --border:rgba(0,225,187,.18);
   --cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;
-  --green:#34d399;--amber:#fbbf24;--pink:#f472b6;
+  --green:#34d399;--amber:#fbbf24;--pink:#f472b6;--red:#f87171;
   --text:#e8edf5;--text2:#8899b0;
   --radius:18px;--radius-sm:12px;
 }
@@ -59,7 +59,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 /* CARDS SCROLL */
 .cards-section{padding:2.5rem 0 4rem;position:relative;z-index:1}
 .cards-wrapper{position:relative;max-width:1300px;margin:0 auto;padding:0 4rem}
-.cards-scroll{display:flex;gap:1.2rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scroll-behavior:auto;padding:.5rem .5rem 1rem;gap:1.2rem}
+.cards-scroll{display:flex;gap:1.2rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scroll-behavior:auto;padding:.5rem .5rem 1rem}
 .cards-scroll::-webkit-scrollbar{height:4px}
 .cards-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.03);border-radius:2px}
 .cards-scroll::-webkit-scrollbar-thumb{background:rgba(0,225,187,.3);border-radius:2px}
@@ -118,11 +118,10 @@ footer a{color:var(--cyan)}
     <li><a href="index.html">首页</a></li>
     <li><a href="about.html">项目简介</a></li>
     <li><a href="innovation.html">创新亮点</a></li>
-    <li><a href="route.html">技术路线</a></li>
-    <li><a href="dbtl.html">DBTL循环</a></li>
-    <li><a href="data.html">数据成果</a></li>
+    <li><a href="roadmap.html">技术路线</a></li>
+    <li><a href="data.html">干湿实验数据</a></li>
     <li><a href="timeline.html">项目时间线</a></li>
-    <li><a href="video.html">实验视频</a></li>
+    <li><a href="ai-model.html">AI大模型</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="菜单">
     <span></span><span></span><span></span>
@@ -172,32 +171,32 @@ footer a{color:var(--cyan)}
         <span class="card-tag">了解更多 →</span>
       </a>
 
-      <a href="route.html" class="card" data-accent="purple">
+      <a href="roadmap.html" class="card" data-accent="purple">
         <div class="card-icon" data-accent="purple">🔬</div>
         <h3>技术路线</h3>
-        <p>从基因元件设计到体内验证的完整技术路径，AI辅助的启动子优化与基因回路构建</p>
+        <p>从基因元件设计到体内验证的完整技术路径，AI辅助的启动子优化与DBTL迭代流程</p>
         <span class="card-tag">了解更多 →</span>
       </a>
 
-      <a href="dbtl.html" class="card" data-accent="green">
-        <div class="card-icon" data-accent="green">🔄</div>
-        <h3>DBTL循环</h3>
-        <p>设计-构建-测试-学习的迭代优化流程，三轮DBTL循环推动项目快速迭代</p>
+      <a href="data.html" class="card" data-accent="green">
+        <div class="card-icon" data-accent="green">📊</div>
+        <h3>干湿实验数据</h3>
+        <p>AI大模型性能评估、特征重要性分析、实验表现数据——数据驱动的研究成果展示</p>
         <span class="card-tag">了解更多 →</span>
       </a>
 
-      <a href="data.html" class="card" data-accent="amber">
-        <div class="card-icon" data-accent="amber">📊</div>
-        <h3>数据成果</h3>
-        <p>实验数据可视化展示，基因表达量化、荧光强度测定与统计分析结果</p>
-        <span class="card-tag">了解更多 →</span>
-      </a>
-
-      <a href="timeline.html" class="card" data-accent="pink">
-        <div class="card-icon" data-accent="pink">📅</div>
+      <a href="timeline.html" class="card" data-accent="amber">
+        <div class="card-icon" data-accent="amber">📅</div>
         <h3>项目时间线</h3>
         <p>从立项到结项的完整时间规划，各阶段里程碑与成果交付节点</p>
         <span class="card-tag">了解更多 →</span>
+      </a>
+
+      <a href="ai-model.html" class="card" data-accent="pink">
+        <div class="card-icon" data-accent="pink">🤖</div>
+        <h3>AI大模型</h3>
+        <p>自主开发的miRNA-肿瘤响应预测大模型，整合深度学习与合成生物学知识</p>
+        <span class="card-tag">即将推出 →</span>
       </a>
 
     </div>

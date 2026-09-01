@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#050d1a;--surface:rgba(255,255,255,.04);--border:rgba(0,225,187,.18);--cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;--green:#34d399;--amber:#fbbf24;--text:#e8ede8;--text2:#8899b0;--radius:18px}
+:root{--bg:#050d1a;--surface:rgba(255,255,255,.04);--border:rgba(0,225,187,.18);--cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;--green:#34d399;--amber:#fbbf24;--pink:#f472b6;--text:#e8ede8;--text2:#8899b0;--radius:18px}
 html{scroll-behavior:auto;font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
 a{color:var(--cyan);text-decoration:none}
@@ -22,7 +22,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 .nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px}
 .page-header{padding:6rem 2rem 2rem;max-width:900px;margin:0 auto}
 .page-header h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:#fff;letter-spacing:-.02em;margin-bottom:.5rem}
-.page-header .tag{display:inline-block;background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.25);border-radius:999px;padding:.3rem 1rem;font-size:.78rem;color:var(--pink,#f472b6);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+.page-header .tag{display:inline-block;background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.25);border-radius:999px;padding:.3rem 1rem;font-size:.78rem;color:var(--pink);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
 .back-btn{display:inline-flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.85rem;margin-bottom:1.5rem;transition:color .2s}
 .back-btn:hover{color:var(--cyan)}
 .back-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
@@ -51,21 +51,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
     <li><a href="index.html">首页</a></li>
     <li><a href="about.html">项目简介</a></li>
     <li><a href="innovation.html">创新亮点</a></li>
-    <li><a href="route.html">技术路线</a></li>
-    <li><a href="dbtl.html">DBTL循环</a></li>
-    <li><a href="data.html">数据成果</a></li>
+    <li><a href="roadmap.html">技术路线</a></li>
+    <li><a href="data.html">干湿实验数据</a></li>
     <li><a href="timeline.html">项目时间线</a></li>
-    <li><a href="video.html">实验视频</a></li>
+    <li><a href="ai-model.html">AI大模型</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
 </nav>
-
 <div class="page-header">
   <a href="index.html" class="back-btn"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回首页</a>
-  <span class="tag" style="background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.25);color:#f472b6">Timeline</span>
+  <span class="tag">Timeline</span>
   <h1>项目时间线</h1>
 </div>
-
 <div class="content">
   <div class="timeline">
     <div class="timeline-item done">
@@ -106,13 +103,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
     </div>
     <div class="timeline-item pending">
       <div class="timeline-date">第14周</div>
-      <h3>答辩准备与网站更新</h3>
+      <h3>答辩准备与成果展示</h3>
       <p>准备答辩PPT，更新项目网站，完成最终展示材料。</p>
       <span class="status pending">○ 待进行</span>
     </div>
   </div>
 </div>
-
 <script>
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
 hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});

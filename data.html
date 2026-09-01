@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>数据成果 | miR-AclE</title>
+<title>干湿实验数据 | miR-AclE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#050d1a;--surface:rgba(255,255,255,.04);--border:rgba(0,225,187,.18);--cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;--green:#34d399;--amber:#fbbf24;--text:#e8ede8;--text2:#8899b0;--radius:18px}
+:root{--bg:#050d1a;--surface:rgba(255,255,255,.04);--border:rgba(0,225,187,.18);--cyan:#00e1bb;--blue:#4dabf7;--purple:#a78bfa;--green:#34d399;--amber:#fbbf24;--red:#f87171;--text:#e8ede8;--text2:#8899b0;--radius:18px}
 html{scroll-behavior:auto;font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
 a{color:var(--cyan);text-decoration:none}
@@ -20,27 +20,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 .nav-links a:hover{color:var(--cyan)}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px}
-.page-header{padding:6rem 2rem 2rem;max-width:900px;margin:0 auto}
+.page-header{padding:6rem 2rem 2rem;max-width:1000px;margin:0 auto}
 .page-header h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:#fff;letter-spacing:-.02em;margin-bottom:.5rem}
-.page-header .tag{display:inline-block;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:999px;padding:.3rem 1rem;font-size:.78rem;color:var(--amber);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+.page-header .tag{display:inline-block;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:999px;padding:.3rem 1rem;font-size:.78rem;color:var(--green);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
 .back-btn{display:inline-flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.85rem;margin-bottom:1.5rem;transition:color .2s}
 .back-btn:hover{color:var(--cyan)}
 .back-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
-.content{max-width:900px;margin:0 auto;padding:0 2rem 4rem;position:relative;z-index:1}
-.data-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;margin:1.5rem 0}
-.data-card h3{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.8rem}
-.data-card p{font-size:.9rem;color:var(--text2);margin-bottom:1rem}
-.chart-placeholder{background:rgba(0,225,187,.03);border:1px dashed rgba(0,225,187,.2);border-radius:var(--radius-sm);height:200px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:.85rem;flex-direction:column;gap:.5rem}
-.chart-placeholder svg{width:32px;height:32px;stroke:var(--text2);fill:none;stroke-width:1.5}
-.data-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88rem}
-.data-table th{text-align:left;padding:.8rem 1rem;background:rgba(0,225,187,.08);color:var(--cyan);font-weight:600;border-bottom:1px solid var(--border)}
-.data-table td{padding:.7rem 1rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text2)}
-.data-table tr:hover td{background:rgba(255,255,255,.02)}
-.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.2rem;text-align:center}
-.stat-card .num{font-size:1.8rem;font-weight:800;color:var(--cyan);line-height:1}
-.stat-card .label{font-size:.75rem;color:var(--text2);margin-top:.3rem;text-transform:uppercase;letter-spacing:.06em}
-@media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}}
+.content{max-width:1000px;margin:0 auto;padding:0 2rem 4rem;position:relative;z-index:1}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin:1.5rem 0}
+.panel h2{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:.3rem}
+.panel .desc{color:var(--text2);font-size:.88rem;margin-bottom:1.5rem}
+.panel .badge{display:inline-block;background:rgba(0,225,187,.08);border:1px solid rgba(0,225,187,.2);border-radius:999px;padding:.2rem .7rem;font-size:.72rem;color:var(--cyan);font-weight:600;margin-bottom:1rem}
+table.dt{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.5rem}
+table.dt th{text-align:left;padding:.7rem 1rem;background:rgba(0,225,187,.08);color:var(--cyan);font-weight:600;border-bottom:1px solid var(--border);white-space:nowrap}
+table.dt td{padding:.6rem 1rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text2)}
+table.dt tr:hover td{background:rgba(255,255,255,.02)}
+table.dt .best{color:var(--green);font-weight:700}
+table.dt .second{color:var(--amber);font-weight:600}
+.bar-row{display:flex;align-items:center;gap:1rem;margin:.5rem 0}
+.bar-label{width:120px;font-size:.82rem;color:var(--text2);text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:24px;background:rgba(255,255,255,.04);border-radius:6px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:.6rem;font-size:.75rem;font-weight:700;color:#050d1a;min-width:40px;transition:width 1s ease}
+.bar-fill.cyan{background:linear-gradient(90deg,#00e1bb,#4dabf7)}
+.bar-fill.blue{background:linear-gradient(90deg,#4dabf7,#a78bfa)}
+.bar-fill.green{background:linear-gradient(90deg,#34d399,#00e1bb)}
+.bar-fill.amber{background:linear-gradient(90deg,#fbbf24,#f97316)}
+.insight{background:rgba(0,225,187,.04);border-left:3px solid var(--cyan);padding:1rem 1.5rem;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-top:1rem;font-size:.88rem;color:var(--text2)}
+.insight strong{color:var(--cyan)}
+@media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}table.dt{font-size:.75rem}table.dt th,table.dt td{padding:.4rem .5rem}.bar-label{width:80px;font-size:.72rem}}
 </style>
 </head>
 <body>
@@ -50,11 +57,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
     <li><a href="index.html">首页</a></li>
     <li><a href="about.html">项目简介</a></li>
     <li><a href="innovation.html">创新亮点</a></li>
-    <li><a href="route.html">技术路线</a></li>
-    <li><a href="dbtl.html">DBTL循环</a></li>
-    <li><a href="data.html">数据成果</a></li>
+    <li><a href="roadmap.html">技术路线</a></li>
+    <li><a href="data.html">干湿实验数据</a></li>
     <li><a href="timeline.html">项目时间线</a></li>
-    <li><a href="video.html">实验视频</a></li>
+    <li><a href="ai-model.html">AI大模型</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
 </nav>
@@ -62,57 +68,131 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 <div class="page-header">
   <a href="index.html" class="back-btn"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回首页</a>
   <span class="tag">Data</span>
-  <h1>数据成果</h1>
+  <h1>干湿实验数据</h1>
+  <p style="color:var(--text2);margin-top:.5rem">AI大模型性能评估与特征重要性分析</p>
 </div>
 
 <div class="content">
-  <div class="stat-row">
-    <div class="stat-card"><div class="num">6+</div><div class="label">设计部件</div></div>
-    <div class="stat-card"><div class="num">3轮</div><div class="label">DBTL循环</div></div>
-    <div class="stat-card"><div class="num">10x</div><div class="label">表达提升</div></div>
-    <div class="stat-card"><div class="num">95%</div><div class="label">响应准确率</div></div>
-  </div>
 
-  <div class="data-card">
-    <h3>📊 启动子活性数据（第一轮DBTL）</h3>
-    <p>在模拟肿瘤微环境（低氧+酸性+p lactate）条件下，各候选启动子的相对荧光强度：</p>
-    <table class="data-table">
-      <tr><th>启动子</th><th>基础表达</th><th>诱导表达</th><th>诱导倍数</th><th>评级</th></tr>
-      <tr><td>Promoter-A</td><td>120 RFU</td><td>480 RFU</td><td>4x</td><td>⭐⭐</td></tr>
-      <tr><td>Promoter-B</td><td>85 RFU</td><td>850 RFU</td><td>10x</td><td>⭐⭐⭐⭐⭐</td></tr>
-      <tr><td>Promoter-C</td><td>200 RFU</td><td>600 RFU</td><td>3x</td><td>⭐⭐</td></tr>
-      <tr><td>Promoter-D</td><td>50 RFU</td><td>320 RFU</td><td>6.4x</td><td>⭐⭐⭐</td></tr>
-      <tr><td>Promoter-E</td><td>150 RFU</td><td>450 RFU</td><td>3x</td><td>⭐⭐</td></tr>
+  <!-- Panel 1: Summary -->
+  <div class="panel">
+    <span class="badge">原始阈值 · model_performance_summary.csv</span>
+    <h2>六大模型性能对比</h2>
+    <p class="desc">在未进行阈值调优的原始测试集上，各模型在二分类任务（肿瘤响应 vs 非响应）上的综合表现。</p>
+    <table class="dt">
+      <thead><tr><th>模型</th><th>ACC</th><th>AUROC</th><th>AUPR</th><th>Recall</th><th>Precision</th><th>F1</th></tr></thead>
+      <tbody>
+        <tr><td>Logistic_ElasticNet</td><td>0.031</td><td class="second">0.003</td><td>0.073</td><td>0.000</td><td>—</td><td>—</td></tr>
+        <tr><td>Linear_SVM</td><td class="second">0.031</td><td class="best">0.991</td><td class="best">0.932</td><td class="best">1.000</td><td>0.205</td><td class="best">0.340</td></tr>
+        <tr><td>RandomForest</td><td>0.875</td><td>0.087</td><td>0.076</td><td>0.000</td><td>—</td><td>—</td></tr>
+        <tr><td>XGBoost</td><td>0.641</td><td>0.507</td><td>0.156</td><td>0.000</td><td>—</td><td>—</td></tr>
+        <tr><td>LightGBM</td><td>0.234</td><td>0.090</td><td>0.087</td><td>0.000</td><td>—</td><td>—</td></tr>
+        <tr><td>CatBoost</td><td>0.594</td><td>0.507</td><td>0.131</td><td>0.500</td><td>0.154</td><td>0.235</td></tr>
+      </tbody>
     </table>
-  </div>
-
-  <div class="data-card">
-    <h3>📈 表达优化数据（第二轮DBTL）</h3>
-    <p>通过RBS优化和启动子组合调整，目标蛋白表达量显著提升：</p>
-    <table class="data-table">
-      <tr><th>构建体</th><th>荧光强度</th><th>mRNA水平</th><th>相对表达量</th></tr>
-      <tr><td>原始设计</td><td>1,200 RFU</td><td>1.0x</td><td>1x</td></tr>
-      <tr><td>RBS优化#1</td><td>2,800 RFU</td><td>1.8x</td><td>2.3x</td></tr>
-      <tr><td>RBS优化#2</td><td>8,500 RFU</td><td>4.2x</td><td>7.1x</td></tr>
-      <tr><td>最优组合</td><td>12,000 RFU</td><td>6.5x</td><td>10x</td></tr>
-    </table>
-  </div>
-
-  <div class="data-card">
-    <h3>🧪 体内实验初步数据</h3>
-    <p>MC38结肠癌小鼠模型口服工程菌后的初步结果：</p>
-    <div class="chart-placeholder">
-      <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 3 5-8"/></svg>
-      <span>肿瘤体积随时间变化曲线（实验进行中）</span>
+    <div class="insight">
+      <strong>关键发现：</strong>Linear_SVM 在 AUROC（0.991）和 AUPR（0.932）上表现最优，且 Recall 达到 1.0（无假阴性），说明其对阳性样本的识别能力最强。RF 和 XGBoost 准确率看似较高，但 Recall 为 0，实际存在严重漏报问题。
     </div>
-    <p style="margin-top:1rem;font-size:.85rem;color:var(--text2)">💡 实验视频录制中，预计下周完成体内成像数据</p>
   </div>
+
+  <!-- Panel 2: Threshold Tuned -->
+  <div class="panel">
+    <span class="badge">阈值调优后 · model_performance_threshold_tuned.csv</span>
+    <h2>调优后模型性能对比</h2>
+    <p class="desc">通过优化分类阈值后，各模型的 Recall、Precision 和 F1 得到显著提升。</p>
+    <table class="dt">
+      <thead><tr><th>模型</th><th>ACC</th><th>AUROC</th><th>AUPR</th><th>Recall</th><th>Precision</th><th>F1</th></tr></thead>
+      <tbody>
+        <tr><td>Logistic_ElasticNet</td><td>0.031</td><td class="second">0.003</td><td>0.073</td><td>0.125</td><td>0.018</td><td>0.031</td></tr>
+        <tr><td>Linear_SVM</td><td class="best">0.516</td><td class="best">0.991</td><td class="best">0.932</td><td class="best">1.000</td><td>0.205</td><td class="best">0.340</td></tr>
+        <tr><td>RandomForest</td><td>0.797</td><td>0.087</td><td>0.076</td><td>0.000</td><td>—</td><td>—</td></tr>
+        <tr><td>XGBoost</td><td>0.750</td><td>0.507</td><td>0.156</td><td>0.000</td><td>—</td><td>—</td></tr>
+        <tr><td>LightGBM</td><td>0.094</td><td>0.090</td><td>0.087</td><td>0.750</td><td>0.097</td><td>0.171</td></tr>
+        <tr><td>CatBoost</td><td>0.844</td><td>0.507</td><td>0.131</td><td>0.000</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="insight">
+      <strong>关键发现：</strong>Linear_SVM 调优后仍保持 AUROC 0.991 和 Recall 1.0，ACC 提升至 0.516。CatBoost ACC 高达 0.844 但 Recall 为 0，说明其倾向于预测阴性类，需进一步调参。
+    </div>
+  </div>
+
+  <!-- Panel 3: Feature Importance -->
+  <div class="panel">
+    <span class="badge">跨模型一致性 · cross_model_feature_importance.csv</span>
+    <h2>特征重要性（Permutation Importance）</h2>
+    <p class="desc">通过置换重要性评估各特征对模型预测的贡献，取6个模型的平均值作为最终排序依据。</p>
+    <div id="feature-bars" style="margin-top:1rem"></div>
+    <div class="insight">
+      <strong>关键发现：</strong>miRNA_GC_fraction（平均重要性 0.0135）是最重要的特征，其次是 miR-155 标识（0.0117）。所有 MB（mRNA备份）相关特征的重要性均为 0，说明 miRNA 序列特征比 MB 特征更具预测价值。
+    </div>
+  </div>
+
+  <!-- Panel 4: Bar chart for top features -->
+  <div class="panel">
+    <span class="badge">可视化</span>
+    <h2>Top 特征重要性条形图</h2>
+    <p class="desc">各模型对 top 特征的贡献差异</p>
+    <div id="detail-bars" style="margin-top:1rem"></div>
+  </div>
+
 </div>
 
 <script>
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
 hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});
 navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')}));
+
+// Feature importance data from CSV
+const features = [
+  {name:'miRNA_GC_fraction',     LogE:0,      SVM:0,      RF:0.020, XGB:0.022,  LGB:0.019,  CB:0.020,  mean:0.014},
+  {name:'miRNA_ID_miR-155',      LogE:0,      SVM:0,      RF:0.016, XGB:0,      LGB:0,      CB:0.055,  mean:0.012},
+  {name:'miRNA_length',          LogE:0,      SVM:0,      RF:0.017, XGB:0.053,  LGB:-0.016, CB:0.009,  mean:0.009},
+  {name:'miRNA_ID_miR-200c-3p',  LogE:0,      SVM:0,      RF:0.005, XGB:0.020,  LGB:0,      CB:0,      mean:0.004},
+  {name:'miRNA_ID_miR-21-5p',    LogE:0,      SVM:0,      RF:0.016, XGB:0.006,  LGB:0,      CB:0,      mean:0.004},
+  {name:'miRNA_ID_miR-200a-3p',  LogE:0,      SVM:0,      RF:0.008, XGB:0,      LGB:0,      CB:0.006,  mean:0.002},
+  {name:'miRNA_ID_miR-429',      LogE:0,      SVM:0,      RF:0.005, XGB:0.002,  LGB:0,      CB:-0.006, mean:0},
+];
+const maxMean = Math.max(...features.map(f=>f.mean));
+const maxVal  = Math.max(...features.flatMap(f=>[f.LogE,f.SVM,f.RF,f.XGB,f.LGB,f.CB].map(v=>Math.abs(v))));
+const modelColors = {LogE:'var(--cyan)',SVM:'var(--blue)',RF:'var(--purple)',XGB:'var(--green)',LGB:'var(--amber)',CB:'var(--pink)'};
+const modelNames  = {LogE:'LogE',SVM:'SVM',RF:'RF',XGB:'XGB',LGB:'LGB',CB:'CB'};
+
+// Top features bar chart
+const barsContainer = document.getElementById('feature-bars');
+features.forEach(f => {
+  const pct = (f.mean / maxMean * 100).toFixed(0);
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+  row.innerHTML = `<div class="bar-label" title="${f.name}">${f.name.replace('miRNA_','')}</div>
+    <div class="bar-track"><div class="bar-fill cyan" style="width:${pct}%">${f.mean.toFixed(4)}</div></div>`;
+  barsContainer.appendChild(row);
+});
+
+// Detail: stacked comparison
+const detailContainer = document.getElementById('detail-bars');
+const top4 = features.slice(0,4);
+top4.forEach(f => {
+  const row = document.createElement('div');
+  row.style.marginBottom = '1.2rem';
+  const label = document.createElement('div');
+  label.style.cssText = 'font-size:.82rem;color:var(--text2);margin-bottom:.4rem;font-weight:600';
+  label.textContent = f.name.replace('miRNA_','');
+  row.appendChild(label);
+  const track = document.createElement('div');
+  track.style.cssText = 'display:grid;grid-template-columns:repeat(6,1fr);gap:4px';
+  [ 'LogE','SVM','RF','XGB','LGB','CB' ].forEach(m => {
+    const val = f[m];
+    const w = Math.abs(val) / maxVal * 100;
+    const bar = document.createElement('div');
+    bar.style.cssText = `height:28px;background:${val>=0 ? (modelColors[m]+'33') : 'rgba(248,113,113,.2)'};border:1px solid ${val>=0 ? modelColors[m]+'66' : 'rgba(248,113,113,.4)'};border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:${modelColors[m]};font-weight:600;overflow:hidden`;
+    bar.title = `${modelNames[m]}: ${val.toFixed(4)}`;
+    bar.innerHTML = val !== 0 ? `<div style="width:${w}%;height:100%;background:${modelColors[m]}44;border-radius:3px"></div><span style="position:absolute;font-size:.65rem">${val.toFixed(3)}</span>` : '<span style="font-size:.65rem;color:var(--text2)">0</span>';
+    bar.style.position = 'relative';
+    track.appendChild(bar);
+  });
+  row.appendChild(track);
+  detailContainer.appendChild(row);
+});
 </script>
 </body>
 </html>

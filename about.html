@@ -12,7 +12,6 @@
 html{scroll-behavior:auto;font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
 a{color:var(--cyan);text-decoration:none}
-img{max-width:100%;display:block}
 nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 3rem;height:64px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{font-size:1.15rem;font-weight:800;color:var(--cyan);letter-spacing:.06em}
 .nav-logo span{color:var(--purple)}
@@ -50,20 +49,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
     <li><a href="index.html">首页</a></li>
     <li><a href="about.html">项目简介</a></li>
     <li><a href="innovation.html">创新亮点</a></li>
-    <li><a href="route.html">技术路线</a></li>
-    <li><a href="dbtl.html">DBTL循环</a></li>
-    <li><a href="data.html">数据成果</a></li>
+    <li><a href="roadmap.html">技术路线</a></li>
+    <li><a href="data.html">干湿实验数据</a></li>
     <li><a href="timeline.html">项目时间线</a></li>
-    <li><a href="video.html">实验视频</a></li>
+    <li><a href="ai-model.html">AI大模型</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="page-header">
-  <a href="index.html" class="back-btn">
-    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    返回首页
-  </a>
+  <a href="index.html" class="back-btn"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回首页</a>
   <span class="tag">About</span>
   <h1>项目简介</h1>
   <p style="color:var(--text2);font-size:1rem;margin-top:.5rem">miR-AclE：AI驱动的肠道菌群智能疗法</p>
@@ -91,7 +86,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
   <p>我们采用AI驱动的合成生物学设计流程：</p>
   <ul>
     <li><strong style="color:var(--cyan)">AI辅助设计：</strong>利用深度学习模型预测启动子活性、RBS效率，加速元件筛选</li>
-    <li><strong style="color:var(--blue)">基因回路构建：</strong>设计肿瘤微环境响应型启动子+microRNA表达 cassette</li>
+    <li><strong style="color:var(--blue)">基因回路构建：</strong>设计肿瘤微环境响应型启动子+microRNA表达cassette</li>
     <li><strong style="color:var(--purple)">DBTL迭代：</strong>通过设计-构建-测试-学习循环不断优化系统性能</li>
     <li><strong style="color:var(--green)">体内验证：</strong>在结肠癌小鼠模型中验证工程菌的治疗效果</li>
   </ul>
@@ -115,19 +110,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
 hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});
 navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')}));
-const transition=document.getElementById('pageTransition');
-document.querySelectorAll('a[href$=".html"]').forEach(link=>{
-  link.addEventListener('click',e=>{
-    const href=link.getAttribute('href');
-    if(href==='#')return;
-    e.preventDefault();
-    const t=document.getElementById('pageTransition2');
-    if(!t){const d=document.createElement('div');d.id='pageTransition2';d.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:#050d1a;z-index:9999;opacity:0;pointer-events:none;transition:opacity .18s ease';document.body.appendChild(d)}
-    const el=document.getElementById('pageTransition2');
-    el.style.opacity='1';el.style.pointerEvents='all';
-    setTimeout(()=>window.location.href=href,200);
-  });
-});
 </script>
 </body>
 </html>
