@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -39,6 +39,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem;text-align:center}
 .stat-card .num{font-size:2rem;font-weight:800;color:var(--cyan);line-height:1}
 .stat-card .label{font-size:.78rem;color:var(--text2);margin-top:.3rem;text-transform:uppercase;letter-spacing:.06em}
+.eq-box{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--radius-sm);padding:1.2rem 1.5rem;margin:1.5rem 0;font-family:'Inter',monospace;font-size:.9rem;color:var(--purple);text-align:center}
 @media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}}
 </style>
 </head>
@@ -61,47 +62,45 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
   <a href="index.html" class="back-btn"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回首页</a>
   <span class="tag">About</span>
   <h1>项目简介</h1>
-  <p style="color:var(--text2);font-size:1rem;margin-top:.5rem">miR-AclE：AI驱动的肠道菌群智能疗法</p>
+  <p style="color:var(--text2);font-size:1rem;margin-top:.5rem">miR-AclE：DNA逻辑网络分子信标肿瘤标志物检测系统</p>
 </div>
 
 <div class="content">
   <div class="highlight-box">
-    <h3>🎯 项目愿景</h3>
-    <p style="margin-top:.8rem">面对癌症治疗中化疗药物副作用大、靶向性差的难题，我们团队提出了一种全新的<strong style="color:var(--cyan)">智能微生物疗法</strong>——利用工程化益生菌在肿瘤微环境中精准释放治疗性microRNA，实现"体内药物工厂"的构想。</p>
+    <h3>🎯 项目核心</h3>
+    <p style="margin-top:.8rem">肿瘤早期诊断依赖高灵敏度的标志物检测，传统方法存在灵敏度不足和假阳性率高的问题。我们开发了一套基于<strong style="color:var(--cyan)">DNA逻辑网络与分子信标</strong>的双通道荧光检测系统，通过EV（细胞外囊泡）来源的miRNA实现肿瘤的精准诊断。</p>
   </div>
 
-  <h2>研究背景</h2>
-  <p>结直肠癌（CRC）是全球第三大常见恶性肿瘤，传统化疗药物如5-氟尿嘧啶（5-FU）虽然有效，但存在严重的全身毒副作用。近年来，合成生物学为癌症治疗提供了新思路：将工程菌作为"活体药物"，在肿瘤微环境中特异性表达治疗分子。</p>
-  <p>我们的项目核心是设计一套基于<strong style="color:var(--cyan)">microRNA调控</strong>的肠道菌群智能系统，通过AI辅助的基因回路设计，让益生菌在肿瘤微环境中精准识别并释放抗肿瘤因子。</p>
+  <h2>科学问题</h2>
+  <p>现有的肿瘤标志物检测面临两个主要瓶颈：灵敏度不足，难以在早期发现微量标志物；假阳性率高，单一标志物容易受到个体差异干扰。我们的方案通过DNA逻辑门和分子信标探针的组合，在单个检测体系中同时读取两个荧光通道信号，以比值方式消除背景噪声。</p>
 
-  <h2>核心科学问题</h2>
-  <ul>
-    <li>如何设计响应肿瘤微环境的关键启动子元件？</li>
-    <li>如何利用AI加速基因回路的设计与优化？</li>
-    <li>工程菌在肠道环境中的安全性与稳定性如何保障？</li>
-    <li>microRNA疗法的体内递送效率能否满足治疗需求？</li>
-  </ul>
+  <h2>检测原理</h2>
+  <p>分子信标（Molecular Beacon, MB）是一段茎环结构的DNA探针，5'端标记荧光基团（Cy3），3'端标记淬灭基团（BHQ1）。当MB与目标miRNA结合时，茎环打开，荧光恢复。</p>
+  
+  <div class="eq-box">
+    R = (I<sub>red</sub> − I<sub>red,blank</sub>) / (I<sub>green</sub> − I<sub>green,blank</sub>)
+  </div>
+  <p>我们同时设计两个MB，分别响应不同的miRNA标志物。红色通道（Cy3）和绿色通道（QM）构成双通道体系，以比值 R 作为定量指标，消除样本间差异。只有当两个目标miRNA同时存在时，系统才触发正信号输出，形成逻辑AND门效应，进一步降低假阳性率。</p>
 
   <h2>技术路径</h2>
-  <p>我们采用AI驱动的合成生物学设计流程：</p>
   <ul>
-    <li><strong style="color:var(--cyan)">AI辅助设计：</strong>利用深度学习模型预测启动子活性、RBS效率，加速元件筛选</li>
-    <li><strong style="color:var(--blue)">基因回路构建：</strong>设计肿瘤微环境响应型启动子+microRNA表达cassette</li>
-    <li><strong style="color:var(--purple)">DBTL迭代：</strong>通过设计-构建-测试-学习循环不断优化系统性能</li>
-    <li><strong style="color:var(--green)">体内验证：</strong>在结肠癌小鼠模型中验证工程菌的治疗效果</li>
+    <li><strong style="color:var(--cyan)">AI辅助设计：</strong>Evo 2生成候选MB序列，DNABERT-2进行判别筛选，NUPACK验证茎环结构稳定性</li>
+    <li><strong style="color:var(--blue)">双通道设计：</strong>两个MB探针分别响应不同miRNA，以比值方式消除背景噪声</li>
+    <li><strong style="color:var(--purple)">DBTL迭代：</strong>设计-构建-测试-学习循环，持续优化MB性能</li>
+    <li><strong style="color:var(--green)">湿实验验证：</strong>在模拟肿瘤微环境条件下验证检测灵敏度与特异性</li>
   </ul>
 
   <div class="stats-row">
-    <div class="stat-card"><div class="num">6+</div><div class="label">设计部件</div></div>
-    <div class="stat-card"><div class="num">3轮</div><div class="label">DBTL循环</div></div>
-    <div class="stat-card"><div class="num">10x</div><div class="label">表达提升</div></div>
-    <div class="stat-card"><div class="num">AI</div><div class="label">辅助设计</div></div>
+    <div class="stat-card"><div class="num">2</div><div class="label">荧光通道</div></div>
+    <div class="stat-card"><div class="num">6+</div><div class="label">验证模型</div></div>
+    <div class="stat-card"><div class="num">0.991</div><div class="label">最高AUROC</div></div>
+    <div class="stat-card"><div class="num">AI</div><div class="label">驱动设计</div></div>
   </div>
 
   <div class="highlight-box">
     <h3>🏆 团队信息</h3>
     <p style="margin-top:.8rem"><strong style="color:var(--amber)">团队名称：</strong>ATCG 碱基互补配队</p>
-    <p><strong style="color:var(--amber)">所属院校：</strong>天津大学 · 合成生物学专业</p>
+    <p><strong style="color:var(--amber)">所属院校：</strong>天津大学 · 合成生物与生物制造学院</p>
     <p><strong style="color:var(--amber)">参赛赛事：</strong>AI+合成生物创新大赛 2026</p>
   </div>
 </div>
