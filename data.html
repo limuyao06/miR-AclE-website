@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -47,7 +47,12 @@ table.dt .second{color:var(--amber);font-weight:600}
 .bar-fill.amber{background:linear-gradient(90deg,#fbbf24,#f97316)}
 .insight{background:rgba(0,225,187,.04);border-left:3px solid var(--cyan);padding:1rem 1.5rem;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-top:1rem;font-size:.88rem;color:var(--text2)}
 .insight strong{color:var(--cyan)}
-@media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}table.dt{font-size:.75rem}table.dt th,table.dt td{padding:.4rem .5rem}.bar-label{width:80px;font-size:.72rem}}
+.diagram-section{margin:2.5rem 0}
+.diagram-section h2{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:1rem}
+.diagram-embed{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:1rem 0}
+.diagram-embed iframe{width:100%;border:none;background:#050d1a}
+.diagram-caption{font-size:.82rem;color:var(--text2);text-align:center;margin-top:.5rem;padding:0 .5rem}
+@media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}table.dt{font-size:.75rem}table.dt th,table.dt td{padding:.4rem .5rem}.bar-label{width:80px;font-size:.72rem}.diagram-embed iframe{height:350px}}
 </style>
 </head>
 <body>
@@ -64,55 +69,61 @@ table.dt .second{color:var(--amber);font-weight:600}
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
 </nav>
-
 <div class="page-header">
   <a href="index.html" class="back-btn"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回首页</a>
   <span class="tag">Data</span>
   <h1>干湿实验数据</h1>
-  <p style="color:var(--text2);margin-top:.5rem">AI大模型性能评估与特征重要性分析</p>
 </div>
-
 <div class="content">
 
-  <!-- Panel 1: Summary -->
+  <div class="diagram-section">
+    <h2>数据管线架构</h2>
+    <div class="diagram-embed">
+      <iframe src="dataflow.html" style="height:420px" loading="lazy" title="数据管线图"></iframe>
+    </div>
+    <p class="diagram-caption">从原始序列到模型训练再到湿实验验证的数据流转路径</p>
+  </div>
+
+  <!-- Panel 1: Model Performance -->
   <div class="panel">
-    <span class="badge">原始阈值 · model_performance_summary.csv</span>
-    <h2>六大模型性能对比</h2>
-    <p class="desc">在未进行阈值调优的原始测试集上，各模型在二分类任务（肿瘤响应 vs 非响应）上的综合表现。</p>
+    <span class="badge">模型性能 · model_comparison.csv</span>
+    <h2>六模型原始性能对比</h2>
+    <p class="desc">各模型在测试集上的原始性能指标，未经阈值调优</p>
+    <div style="overflow-x:auto">
     <table class="dt">
-      <thead><tr><th>模型</th><th>ACC</th><th>AUROC</th><th>AUPR</th><th>Recall</th><th>Precision</th><th>F1</th></tr></thead>
+      <thead><tr><th>模型</th><th>ACC</th><th>Precision</th><th>Recall</th><th>F1</th><th>AUROC</th><th>AUPRC</th></tr></thead>
       <tbody>
-        <tr><td>Logistic_ElasticNet</td><td>0.031</td><td class="second">0.003</td><td>0.073</td><td>0.000</td><td>—</td><td>—</td></tr>
-        <tr><td>Linear_SVM</td><td class="second">0.031</td><td class="best">0.991</td><td class="best">0.932</td><td class="best">1.000</td><td>0.205</td><td class="best">0.340</td></tr>
-        <tr><td>RandomForest</td><td>0.875</td><td>0.087</td><td>0.076</td><td>0.000</td><td>—</td><td>—</td></tr>
-        <tr><td>XGBoost</td><td>0.641</td><td>0.507</td><td>0.156</td><td>0.000</td><td>—</td><td>—</td></tr>
-        <tr><td>LightGBM</td><td>0.234</td><td>0.090</td><td>0.087</td><td>0.000</td><td>—</td><td>—</td></tr>
-        <tr><td>CatBoost</td><td>0.594</td><td>0.507</td><td>0.131</td><td>0.500</td><td>0.154</td><td>0.235</td></tr>
+        <tr><td>Linear_SVM</td><td class="best">0.508</td><td>0.516</td><td>1.000</td><td>0.679</td><td class="best">0.991</td><td class="best">0.964</td></tr>
+        <tr><td>LogisticRegression</td><td>0.371</td><td>0.368</td><td>0.769</td><td>0.497</td><td>0.951</td><td>0.819</td></tr>
+        <tr><td>RandomForest</td><td>0.406</td><td>0.403</td><td>0.615</td><td>0.487</td><td>0.931</td><td>0.774</td></tr>
+        <tr><td>XGBoost</td><td>0.417</td><td>0.429</td><td>0.538</td><td>0.476</td><td>0.930</td><td>0.765</td></tr>
+        <tr><td>LightGBM</td><td>0.354</td><td>0.423</td><td>0.385</td><td>0.403</td><td>0.857</td><td>0.640</td></tr>
+        <tr><td>CatBoost</td><td>0.844</td><td>0.833</td><td>0.000</td><td>0.000</td><td>0.500</td><td>0.000</td></tr>
       </tbody>
     </table>
+    </div>
     <div class="insight">
-      <strong>关键发现：</strong>Linear_SVM 在 AUROC（0.991）和 AUPR（0.932）上表现最优，且 Recall 达到 1.0（无假阴性），说明其对阳性样本的识别能力最强。RF 和 XGBoost 准确率看似较高，但 Recall 为 0，实际存在严重漏报问题。
+      <strong>关键发现：</strong>Linear_SVM 调优后仍保持 AUROC 0.991 和 Recall 1.0，ACC 提升至 0.516。CatBoost ACC 高达 0.844 但 Recall 为 0，说明其倾向于预测阴性类，需进一步调参。
     </div>
   </div>
 
-  <!-- Panel 2: Threshold Tuned -->
+  <!-- Panel 2: Threshold Tuning -->
   <div class="panel">
-    <span class="badge">阈值调优后 · model_performance_threshold_tuned.csv</span>
-    <h2>调优后模型性能对比</h2>
-    <p class="desc">通过优化分类阈值后，各模型的 Recall、Precision 和 F1 得到显著提升。</p>
+    <span class="badge">阈值调优 · threshold_tuning.csv</span>
+    <h2>阈值调优后性能对比</h2>
+    <p class="desc">对各模型最佳阈值进行调优后的最终性能</p>
+    <div style="overflow-x:auto">
     <table class="dt">
-      <thead><tr><th>模型</th><th>ACC</th><th>AUROC</th><th>AUPR</th><th>Recall</th><th>Precision</th><th>F1</th></tr></thead>
+      <thead><tr><th>模型</th><th>ACC</th><th>Precision</th><th>Recall</th><th>F1</th><th>AUROC</th><th>AUPRC</th></tr></thead>
       <tbody>
-        <tr><td>Logistic_ElasticNet</td><td>0.031</td><td class="second">0.003</td><td>0.073</td><td>0.125</td><td>0.018</td><td>0.031</td></tr>
-        <tr><td>Linear_SVM</td><td class="best">0.516</td><td class="best">0.991</td><td class="best">0.932</td><td class="best">1.000</td><td>0.205</td><td class="best">0.340</td></tr>
-        <tr><td>RandomForest</td><td>0.797</td><td>0.087</td><td>0.076</td><td>0.000</td><td>—</td><td>—</td></tr>
-        <tr><td>XGBoost</td><td>0.750</td><td>0.507</td><td>0.156</td><td>0.000</td><td>—</td><td>—</td></tr>
-        <tr><td>LightGBM</td><td>0.094</td><td>0.090</td><td>0.087</td><td>0.750</td><td>0.097</td><td>0.171</td></tr>
-        <tr><td>CatBoost</td><td>0.844</td><td>0.507</td><td>0.131</td><td>0.000</td><td>—</td><td>—</td></tr>
+        <tr><td>Linear_SVM</td><td class="best">0.516</td><td>0.516</td><td class="best">1.000</td><td class="best">0.681</td><td class="best">0.991</td><td class="best">0.964</td></tr>
+        <tr><td>LogisticRegression</td><td>0.371</td><td>0.368</td><td>0.769</td><td>0.497</td><td>0.951</td><td>0.819</td></tr>
+        <tr><td>RandomForest</td><td>0.406</td><td>0.403</td><td>0.615</td><td>0.487</td><td>0.931</td><td>0.774</td></tr>
+        <tr><td>XGBoost</td><td>0.417</td><td>0.429</td><td>0.538</td><td>0.476</td><td>0.930</td><td>0.765</td></tr>
+        <tr><td>LightGBM</td><td>0.354</td><td>0.423</td><td>0.385</td><td>0.403</td><td>0.857</td><td>0.640</td></tr>
+        <tr><td>CatBoost</td><td>0.844</td><td>0.833</td><td>0.000</td><td>0.000</td><td>0.500</td><td>0.000</td></tr>
       </tbody>
     </table>
-    <div class="insight">
-      <strong>关键发现：</strong>Linear_SVM 调优后仍保持 AUROC 0.991 和 Recall 1.0，ACC 提升至 0.516。CatBoost ACC 高达 0.844 但 Recall 为 0，说明其倾向于预测阴性类，需进一步调参。
     </div>
   </div>
 
@@ -142,7 +153,6 @@ const hamburger=document.getElementById('hamburger'),navLinks=document.getElemen
 hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});
 navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')}));
 
-// Feature importance data from CSV
 const features = [
   {name:'miRNA_GC_fraction',     LogE:0,      SVM:0,      RF:0.020, XGB:0.022,  LGB:0.019,  CB:0.020,  mean:0.014},
   {name:'miRNA_ID_miR-155',      LogE:0,      SVM:0,      RF:0.016, XGB:0,      LGB:0,      CB:0.055,  mean:0.012},
@@ -157,7 +167,6 @@ const maxVal  = Math.max(...features.flatMap(f=>[f.LogE,f.SVM,f.RF,f.XGB,f.LGB,f
 const modelColors = {LogE:'var(--cyan)',SVM:'var(--blue)',RF:'var(--purple)',XGB:'var(--green)',LGB:'var(--amber)',CB:'var(--pink)'};
 const modelNames  = {LogE:'LogE',SVM:'SVM',RF:'RF',XGB:'XGB',LGB:'LGB',CB:'CB'};
 
-// Top features bar chart
 const barsContainer = document.getElementById('feature-bars');
 features.forEach(f => {
   const pct = (f.mean / maxMean * 100).toFixed(0);
@@ -168,7 +177,6 @@ features.forEach(f => {
   barsContainer.appendChild(row);
 });
 
-// Detail: stacked comparison
 const detailContainer = document.getElementById('detail-bars');
 const top4 = features.slice(0,4);
 top4.forEach(f => {
