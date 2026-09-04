@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -27,13 +27,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 .back-btn:hover{color:var(--cyan)}
 .back-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 .content{max-width:900px;margin:0 auto;padding:0 2rem 4rem;position:relative;z-index:1}
-.coming-soon{text-align:center;padding:4rem 2rem}
-.coming-soon .big-icon{font-size:4rem;margin-bottom:1.5rem;opacity:.6}
-.coming-soon h2{font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:.8rem}
-.coming-soon p{color:var(--text2);max-width:500px;margin:0 auto 2rem;font-size:.95rem}
-.coming-soon .wait-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.25);border-radius:999px;padding:.5rem 1.2rem;font-size:.85rem;color:var(--pink);font-weight:500}
-.coming-soon .wait-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--pink);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+.model-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin:1.5rem 0}
+.model-card h2{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.model-card .model-type{display:inline-block;font-size:.72rem;color:var(--pink);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.8rem}
+.model-card p{color:var(--text2);font-size:.9rem;line-height:1.7}
+.model-card .specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.8rem;margin-top:1.2rem}
+.model-card .spec{background:rgba(255,255,255,.03);border-radius:8px;padding:.8rem}
+.model-card .spec .val{font-size:1.3rem;font-weight:800;color:var(--cyan)}
+.model-card .spec .key{font-size:.72rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem}
+.flow-section{margin:2.5rem 0}
+.flow-section h2{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:1rem}
+.flow-step{display:flex;gap:1rem;margin:1rem 0;align-items:flex-start}
+.flow-num{flex:0 0 32px;height:32px;border-radius:50%;background:rgba(244,114,182,.15);border:2px solid var(--pink);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:var(--pink)}
+.flow-text{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.2rem}
+.flow-text p{color:var(--text2);font-size:.9rem;margin:0}
+.flow-text strong{color:#fff}
 @media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}}
 </style>
 </head>
@@ -57,12 +65,66 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
   <h1>AI大模型</h1>
 </div>
 <div class="content">
-  <div class="coming-soon">
-    <div class="big-icon">🧠</div>
-    <h2>miR-Responder v1.0</h2>
-    <p>我们正在构建一个基于深度学习的miRNA-肿瘤响应预测大模型，整合多组学数据，实现对新miRNA序列的自动功能预测。模型即将上线，敬请期待！</p>
-    <div class="wait-badge"><span class="dot"></span>模型训练中，即将上线</div>
+
+  <div class="model-card">
+    <h2>Evo 2 — 生成侧</h2>
+    <div class="model-type">Generative Model</div>
+    <p>Evo 2是Ourai开发的1 Mb上下文大模型，采用StripeHyena架构。我们对其施加结构约束提示策略，引导模型学习DNA茎环结构的规律——环区18-24 bp、茎区5-7 bp碱基对——从而生成具有预期二级结构的分子信标候选序列。</p>
+    <div class="specs">
+      <div class="spec"><div class="val">1 Mb</div><div class="key">上下文窗口</div></div>
+      <div class="spec"><div class="val">StripeHyena</div><div class="key">架构类型</div></div>
+      <div class="spec"><div class="val">18-24 bp</div><div class="key">环区长度</div></div>
+      <div class="spec"><div class="val">5-7 bp</div><div class="key">茎区碱基对</div></div>
+    </div>
   </div>
+
+  <div class="model-card">
+    <h2>DNABERT-2 — 判别侧</h2>
+    <div class="model-type">Discriminative Model</div>
+    <p>DNABERT-2是基于DNA400K（4亿条非冗余DNA序列）预训练的6-mer掩码语言模型。我们用其评估候选序列的结构稳定性和特异性，结合迁移学习微调，区分"能正确折叠的MB"和"会形成错误二级结构的序列"。</p>
+    <div class="specs">
+      <div class="spec"><div class="val">6-mer</div><div class="key">掩码单元</div></div>
+      <div class="spec"><div class="val">400M+</div><div class="key">预训练序列</div></div>
+      <div class="spec"><div class="val">迁移学习</div><div class="key">微调策略</div></div>
+      <div class="spec"><div class="val">S/N + LOD</div><div class="key">评估指标</div></div>
+    </div>
+  </div>
+
+  <div class="flow-section">
+    <h2>AI驱动设计流程</h2>
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-text"><p><strong>Evo 2生成</strong>：根据目标miRNA序列和结构约束，生成数百条候选MB序列</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-text"><p><strong>DNABERT-2筛选</strong>：对候选序列进行结构稳定性和特异性评分，筛选Top-K序列</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-text"><p><strong>NUPACK验证</strong>：计算热力学折叠自由能（ΔG）和平衡分布，排除高背景泄漏序列</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-text"><p><strong>湿实验测试</strong>：合成通过AI筛选的MB，在模拟肿瘤微环境下测定荧光信号，计算S/N和LOD</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-text"><p><strong>数据回流</strong>：实验数据反馈至模型，更新生成策略和筛选参数，进入下一轮DBTL循环</p></div>
+    </div>
+  </div>
+
+  <div class="model-card">
+    <h2>性能指标</h2>
+    <p>经过三轮DBTL迭代，AI筛选的MB在荧光检测中展现出优异性能。最佳模型的AUROC达到<strong style="color:var(--cyan)">0.991</strong>，Recall达到<strong style="color:var(--cyan)">1.0</strong>，特征重要性分析显示miRNA_GC_fraction是最关键的预测特征。</p>
+    <div class="specs">
+      <div class="spec"><div class="val">0.991</div><div class="key">AUROC（Linear_SVM）</div></div>
+      <div class="spec"><div class="val">1.0</div><div class="key">Recall（最佳）</div></div>
+      <div class="spec"><div class="val">0.964</div><div class="key">AUPRC</div></div>
+      <div class="spec"><div class="val">3轮</div><div class="key">DBTL迭代</div></div>
+    </div>
+  </div>
+
 </div>
 <script>
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
