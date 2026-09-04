@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -27,6 +27,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 .back-btn:hover{color:var(--cyan)}
 .back-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 .content{max-width:900px;margin:0 auto;padding:0 2rem 4rem;position:relative;z-index:1}
+.content h2{font-size:1.4rem;font-weight:700;color:#fff;margin:2.5rem 0 1rem;letter-spacing:-.01em}
+.content h3{font-size:1.1rem;font-weight:600;color:var(--cyan);margin:2rem 0 .8rem}
+.content p{color:var(--text2);margin-bottom:1rem;font-size:.95rem}
 .step{display:flex;gap:1.5rem;margin:1.5rem 0;align-items:flex-start}
 .step-num{flex:0 0 48px;height:48px;border-radius:50%;background:rgba(0,225,187,.1);border:2px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:var(--cyan)}
 .step-content{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
@@ -34,9 +37,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
 .step-content p{font-size:.9rem;color:var(--text2)}
 .step-content .tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
 .step-content .tool-tag{background:rgba(0,225,187,.08);border:1px solid rgba(0,225,187,.2);border-radius:999px;padding:.2rem .7rem;font-size:.75rem;color:var(--cyan)}
-.flow-arrow{text-align:center;color:var(--text2);font-size:1.5rem;margin:.5rem 0}
 .round-label{font-size:1.1rem;font-weight:700;color:var(--amber);margin:2.5rem 0 1rem;padding-left:.5rem;border-left:3px solid var(--amber)}
-@media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}}
+.diagram-section{margin:2.5rem 0}
+.diagram-section h2{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:1rem}
+.diagram-embed{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:1rem 0}
+.diagram-embed iframe{width:100%;border:none;background:#050d1a}
+.diagram-caption{font-size:.82rem;color:var(--text2);text-align:center;margin-top:.5rem;padding:0 .5rem}
+@media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,13,26,.97);flex-direction:column;gap:0;padding:1rem 0;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-links a{padding:.8rem 2rem;display:block}.nav-hamburger{display:flex}.page-header{padding:5rem 1.5rem 1.5rem}.content{padding:0 1.5rem 3rem}.diagram-embed iframe{height:400px}}
 </style>
 </head>
 <body>
@@ -59,52 +66,66 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,13,26,.92)
   <h1>技术路线</h1>
 </div>
 <div class="content">
-  <p style="color:var(--text2);margin-bottom:2rem">采用AI驱动的合成生物学设计流程，通过DBTL（Design-Build-Test-Learn）循环快速迭代优化，从基因元件设计到体内验证完成全流程闭环。</p>
+  <p style="color:var(--text2);margin-bottom:2rem">采用AI驱动的合成生物学设计流程，通过DBTL（Design-Build-Test-Learn）循环快速迭代优化，从基因元件设计到湿实验验证完成全流程闭环。</p>
 
-  <div class="round-label">第一阶段 · AI辅助元件设计</div>
+  <div class="round-label">AI辅助设计阶段</div>
   <div class="step">
     <div class="step-num">1</div>
     <div class="step-content">
-      <h3>深度学习预测启动子活性</h3>
-      <p>利用Transformer架构模型，基于公开组学数据训练，预测候选启动子在肠道菌群中的表达强度，从数万种组合中筛选最优元件。</p>
-      <div class="tools"><span class="tool-tag">深度学习</span><span class="tool-tag">启动子预测</span><span class="tool-tag">RBS优化</span></div>
+      <h3>Evo 2 生成候选序列</h3>
+      <p>使用Evo 2大模型（1 Mb上下文，StripeHyena架构）生成分子信标候选序列。在结构约束提示策略下，模型学习DNA茎环结构规律，生成环区18-24 bp、茎区5-7 bp碱基对的MB序列。</p>
+      <div class="tools"><span class="tool-tag">Evo 2</span><span class="tool-tag">生成模型</span><span class="tool-tag">结构约束</span></div>
     </div>
   </div>
   <div class="step">
     <div class="step-num">2</div>
     <div class="step-content">
-      <h3>Golden Gate组装基因回路</h3>
-      <p>将AI筛选的启动子、RBS、终止子与microRNA表达cassette通过Golden Gate法组装，构建完整的基因表达模块。</p>
-      <div class="tools"><span class="tool-tag">Golden Gate</span><span class="tool-tag">质粒构建</span><span class="tool-tag">大肠杆菌转化</span></div>
+      <h3>DNABERT-2 判别筛选</h3>
+      <p>用DNABERT-2（预训练6-mer掩码语言模型）对Evo 2生成的候选序列进行结构稳定性和特异性评分，结合迁移学习微调，区分有效MB与错误折叠序列。</p>
+      <div class="tools"><span class="tool-tag">DNABERT-2</span><span class="tool-tag">判别模型</span><span class="tool-tag">迁移学习</span></div>
     </div>
   </div>
-
-  <div class="round-label">第二阶段 · 湿实验验证</div>
   <div class="step">
     <div class="step-num">3</div>
     <div class="step-content">
-      <h3>荧光报告基因表达检测</h3>
-      <p>在模拟肿瘤微环境（低氧+酸性+p-乳酸）条件下，通过荧光酶标仪测定各启动子驱动GFP的表达强度，建立元件活性数据库。</p>
-      <div class="tools"><span class="tool-tag">荧光定量</span><span class="tool-tag">qRT-PCR</span><span class="tool-tag">Western Blot</span></div>
-    </div>
-  </div>
-  <div class="step">
-    <div class="step-num">4</div>
-    <div class="step-content">
-      <h3>DBTL迭代优化</h3>
-      <p>根据实验数据反馈，调整RBS强度和启动子组合，经三轮迭代实现目标蛋白10倍表达提升。</p>
-      <div class="tools"><span class="tool-tag">参数优化</span><span class="tool-tag">统计建模</span><span class="tool-tag">机器学习</span></div>
+      <h3>NUPACK 结构验证</h3>
+      <p>用NUPACK计算候选序列的热力学折叠自由能（ΔG）和平衡分布，确保MB在无目标时处于关闭状态、在结合目标后能有效打开。</p>
+      <div class="tools"><span class="tool-tag">NUPACK</span><span class="tool-tag">ΔG计算</span><span class="tool-tag">热力学验证</span></div>
     </div>
   </div>
 
-  <div class="round-label">第三阶段 · 体内验证</div>
+  <div class="round-label">湿实验验证阶段</div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h3>MB合成与荧光检测</h3>
+      <p>合成通过AI筛选的MB探针，在模拟肿瘤微环境（目标miRNA存在）条件下，通过荧光酶标仪测定Cy3/Cy5双通道荧光强度，计算信噪比（S/N）和检测限（LOD）。</p>
+      <div class="tools"><span class="tool-tag">MB合成</span><span class="tool-tag">荧光定量</span><span class="tool-tag">S/N评估</span></div>
+    </div>
+  </div>
   <div class="step">
     <div class="step-num">5</div>
     <div class="step-content">
-      <h3>MC38结肠癌小鼠模型</h3>
-      <p>在MC38结肠癌小鼠模型中口服工程菌，通过活体荧光成像监测肿瘤靶向定植，测量肿瘤体积变化评估治疗效果。</p>
-      <div class="tools"><span class="tool-tag">活体成像</span><span class="tool-tag">肿瘤模型</span><span class="tool-tag">免疫组化</span></div>
+      <h3>DBTL迭代优化</h3>
+      <p>将实验数据反馈至AI模型，调整生成策略和筛选参数，每轮约2周完成一轮迭代，三轮后信噪比和检测限显著提升。</p>
+      <div class="tools"><span class="tool-tag">参数调优</span><span class="tool-tag">数据回流</span><span class="tool-tag">机器学习</span></div>
     </div>
+  </div>
+
+  <div class="diagram-section">
+    <h2>系统架构</h2>
+    <div class="diagram-embed">
+      <iframe src="architecture.html" style="height:520px" loading="lazy" title="系统架构图"></iframe>
+    </div>
+    <p class="diagram-caption">AI驱动分子信标设计系统的完整架构，从序列生成到湿实验验证的全流程</p>
+  </div>
+
+  <div class="diagram-section">
+    <h2>DBTL 迭代流程</h2>
+    <div class="diagram-embed">
+      <iframe src="dbtl.html" style="height:420px" loading="lazy" title="DBTL迭代流程图"></iframe>
+    </div>
+    <p class="diagram-caption">Design-Build-Test-Learn 循环，每轮2周，数据回流驱动模型持续优化</p>
   </div>
 </div>
 <script>
